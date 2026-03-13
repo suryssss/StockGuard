@@ -5,7 +5,7 @@ const client = twilio(
   process.env.TWILIO_AUTH_TOKEN
 );
 
-const WHATSAPP_FROM = process.env.TWILIO_WHATSAPP_FROM || "whatsapp:+14155238886";
+const WHATSAPP_FROM = process.env.TWILIO_WHATSAPP_NUMBER || process.env.TWILIO_WHATSAPP_FROM || "whatsapp:+14155238886";
 const SMS_FROM = process.env.TWILIO_SMS_FROM || "";
 
 export async function sendWhatsApp(to: string, message: string): Promise<void> {
@@ -42,6 +42,10 @@ export async function sendSMS(to: string, message: string): Promise<void> {
     to: phone,
     body: message,
   });
+}
+
+export async function sendWhatsAppMessage(phone: string, message: string): Promise<void> {
+  return sendWhatsApp(phone, message);
 }
 
 export async function sendAlert(to: string, message: string): Promise<void> {

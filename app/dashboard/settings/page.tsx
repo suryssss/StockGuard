@@ -10,11 +10,13 @@ export default function SettingsPage() {
   const [phoneNumber, setPhoneNumber] = useState('')
   const [updatingPhone, setUpdatingPhone] = useState(false)
 
-  const triggerTestAlert = async (type: 'test' | 'report') => {
+  const triggerTestAlert = async (type: 'test' | 'report' | 'summary') => {
     setLoading(true)
     setStatus(null)
     try {
-      const res = await fetch(`/api/cron/expiry-alert?${type}=true`, {
+      const endpoint = type === 'summary' ? '/api/demo/send-summary' : `/api/cron/expiry-alert?${type}=true`
+      const res = await fetch(endpoint, {
+        method: type === 'summary' ? 'POST' : 'GET',
         headers: {
           'Authorization': 'Bearer hackathon-secret-123'
         }
@@ -142,7 +144,16 @@ export default function SettingsPage() {
                   className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all shadow-md shadow-emerald-200 disabled:opacity-50"
                 >
                   {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Bell className="w-4 h-4" />}
-                  Send Full Expiry Report
+                  Send Expiry Report
+                </button>
+
+                <button
+                  onClick={() => triggerTestAlert('summary')}
+                  disabled={loading}
+                  className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all shadow-md shadow-indigo-200 disabled:opacity-50"
+                >
+                  {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Smartphone className="w-4 h-4" />}
+                  Send Daily Summary
                 </button>
               </div>
 
