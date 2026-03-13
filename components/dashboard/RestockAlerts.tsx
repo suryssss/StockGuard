@@ -3,7 +3,7 @@ import { AlertTriangle } from 'lucide-react'
 interface RestockProduct {
   name: string
   stock: number
-  avgDaily: number
+  limit: number
 }
 
 interface Props {
@@ -23,7 +23,7 @@ export default function RestockAlerts({ products }: Props) {
             <div>
               <span className="font-medium text-gray-900 text-sm">{p.name}</span>
               <span className="text-xs text-gray-500 ml-2">
-                Stock: {p.stock} · Avg daily sales: {p.avgDaily}
+                Stock: {p.stock} · Restock Limit: {p.limit}
               </span>
             </div>
             <span className="text-xs font-semibold text-amber-700 bg-amber-100 px-2 py-1 rounded-full">

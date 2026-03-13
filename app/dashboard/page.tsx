@@ -73,8 +73,12 @@ export default async function DashboardPage() {
   let restockAlerts = 0
   let currentInventoryCount = 0
 
-  const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate()).toISOString()
-  const sevenDaysAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString()
+  const todayStart = new Date()
+  todayStart.setHours(0, 0, 0, 0)
+  
+  const sevenDaysAgo = new Date()
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+  sevenDaysAgo.setHours(0, 0, 0, 0)
 
   // Stock per product
   const stockMap: Record<string, number> = {}
@@ -88,31 +92,31 @@ export default async function DashboardPage() {
   // Sales aggregation (7-day window for restock, today's for widget)
   const salesMap7d: Record<string, number> = {}
   sales.forEach((s: any) => {
-    if (s.createdAt >= todayStart) {
+    const saleDate = new Date(s.createdAt)
+    if (saleDate >= todayStart) {
       itemsSoldToday += s.quantity
     }
-    if (s.createdAt >= sevenDaysAgo) {
+    if (saleDate >= sevenDaysAgo) {
       salesMap7d[s.productId] = (salesMap7d[s.productId] || 0) + s.quantity
     }
   })
 
-  // Restock alerts: stock < avg_daily_sales_7d * 3
-  const restockProducts: { name: string; stock: number; avgDaily: number }[] = []
+  // Restock alerts: static threshold (e.g. stock <= 10)
+  const restockProducts: { name: string; stock: number; limit: number }[] = []
+  const RESTOCK_LIMIT_THRESHOLD = 10
 
   productIds.forEach((pid: string) => {
     const stock = stockMap[pid] || 0
     if (stock > 0 && stock <= 5) lowStockCount++
 
-    if (salesMap7d[pid]) {
-      const avgDaily = salesMap7d[pid] / 7
-      if (stock < avgDaily * 3) {
-        restockAlerts++
-        restockProducts.push({
-          name: productNameMap[pid] || pid,
-          stock,
-          avgDaily: Math.round(avgDaily * 10) / 10,
-        })
-      }
+    // Setup custom limit here (<= 10)
+    if (stock > 0 && stock <= RESTOCK_LIMIT_THRESHOLD) {
+      restockAlerts++
+      restockProducts.push({
+        name: productNameMap[pid] || pid,
+        stock,
+        limit: RESTOCK_LIMIT_THRESHOLD,
+      })
     }
   })
 
@@ -143,7 +147,7 @@ export default async function DashboardPage() {
   }))
 
   return (
-    <main className="min-h-screen bg-gray-50 p-4 max-w-4xl mx-auto">
+    <main className="p-6 md:p-8 w-full max-w-7xl mx-auto flex-1">
       <header className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">StockGuard</h1>
