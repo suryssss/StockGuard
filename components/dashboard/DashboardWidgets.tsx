@@ -1,4 +1,7 @@
+'use client'
+
 import { Package, TrendingDown, DollarSign, AlertCircle } from 'lucide-react'
+import { useLanguage } from '@/lib/LanguageContext'
 
 interface DashboardWidgetsProps {
   itemsSoldToday: number
@@ -13,11 +16,11 @@ export default function DashboardWidgets({
   restockAlerts, 
   currentInventoryCount 
 }: DashboardWidgetsProps) {
+  const { t } = useLanguage()
   
   const widgets = [
     { 
-      title: "Total Stock", 
-      titleHi: "कुल स्टॉक",
+      title: t.totalStock,
       value: currentInventoryCount, 
       icon: <Package className="w-5 h-5 text-orange-600" />, 
       bg: "bg-gradient-to-br from-orange-100 to-amber-50",
@@ -26,8 +29,7 @@ export default function DashboardWidgets({
       borderColor: "border-orange-200/60"
     },
     { 
-      title: "Sold Today", 
-      titleHi: "आज बेचा",
+      title: t.soldToday,
       value: itemsSoldToday, 
       icon: <DollarSign className="w-5 h-5 text-emerald-600" />, 
       bg: "bg-gradient-to-br from-emerald-100 to-green-50",
@@ -36,8 +38,7 @@ export default function DashboardWidgets({
       borderColor: "border-emerald-200/60"
     },
     { 
-      title: "Low Stock", 
-      titleHi: "कम स्टॉक",
+      title: t.lowStock,
       value: lowStockCount, 
       icon: <TrendingDown className="w-5 h-5 text-amber-600" />, 
       bg: "bg-gradient-to-br from-amber-100 to-yellow-50",
@@ -46,8 +47,7 @@ export default function DashboardWidgets({
       borderColor: "border-amber-200/60"
     },
     { 
-      title: "Restock Alert", 
-      titleHi: "रीस्टॉक अलर्ट",
+      title: t.restockAlert,
       value: restockAlerts, 
       icon: <AlertCircle className="w-5 h-5 text-red-600" />, 
       bg: "bg-gradient-to-br from-red-100 to-rose-50",
@@ -71,7 +71,6 @@ export default function DashboardWidgets({
           </div>
           <p className={`text-2xl font-extrabold ${widget.textColor} tracking-tight`}>{widget.value}</p>
           <p className="text-[11px] font-semibold text-gray-500 mt-1 leading-tight">{widget.title}</p>
-          <p className="text-[10px] text-gray-400">{widget.titleHi}</p>
         </div>
       ))}
     </div>

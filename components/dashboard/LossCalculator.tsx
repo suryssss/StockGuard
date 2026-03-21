@@ -1,8 +1,13 @@
+'use client'
+
 interface Props {
   data: { atRisk: number; recovered: number; lost: number; atRiskCount: number }
 }
 
+import { useLanguage } from '@/lib/LanguageContext'
+
 export default function LossCalculator({ data }: Props) {
+  const { t } = useLanguage()
   const fmt = (n: number) => `₹${n.toLocaleString('en-IN')}`
 
   return (
@@ -13,10 +18,10 @@ export default function LossCalculator({ data }: Props) {
         <div className="relative">
           <div className="flex items-center gap-2 mb-1">
             <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-            <p className="text-[11px] text-red-600 font-bold uppercase tracking-wider">At Risk / जोखिम में</p>
+            <p className="text-[11px] text-red-600 font-bold uppercase tracking-wider">{t.atRisk}</p>
           </div>
           <p className="text-3xl font-extrabold text-red-700 mt-2 tracking-tight">{fmt(data.atRisk)}</p>
-          <p className="text-xs text-red-400 mt-1.5 font-medium">{data.atRiskCount} batches expiring ≤30 days</p>
+          <p className="text-xs text-red-400 mt-1.5 font-medium">{data.atRiskCount} {t.atRiskItems}</p>
         </div>
       </div>
 
@@ -26,10 +31,9 @@ export default function LossCalculator({ data }: Props) {
         <div className="relative">
           <div className="flex items-center gap-2 mb-1">
             <span className="text-sm">✅</span>
-            <p className="text-[11px] text-emerald-600 font-bold uppercase tracking-wider">Recovered / वसूला</p>
+            <p className="text-[11px] text-emerald-600 font-bold uppercase tracking-wider">{t.recovered}</p>
           </div>
           <p className="text-3xl font-extrabold text-emerald-700 mt-2 tracking-tight">{fmt(data.recovered)}</p>
-          <p className="text-xs text-emerald-400 mt-1.5 font-medium">This month / इस महीने</p>
         </div>
       </div>
 
@@ -39,10 +43,9 @@ export default function LossCalculator({ data }: Props) {
         <div className="relative">
           <div className="flex items-center gap-2 mb-1">
             <span className="text-sm">📉</span>
-            <p className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">Lost / नुकसान</p>
+            <p className="text-[11px] text-gray-500 font-bold uppercase tracking-wider">{t.lost}</p>
           </div>
           <p className="text-3xl font-extrabold text-gray-700 mt-2 tracking-tight">{fmt(data.lost)}</p>
-          <p className="text-xs text-gray-400 mt-1.5 font-medium">To date / आज तक</p>
         </div>
       </div>
     </div>

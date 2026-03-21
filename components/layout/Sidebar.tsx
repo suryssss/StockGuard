@@ -5,20 +5,24 @@ import { LayoutDashboard, Package, ShoppingCart, Users, Settings, Bell, LogOut, 
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { createSupabaseBrowserClient } from '@/lib/supabase-browser'
-
-const navItems = [
-  { name: 'Dashboard', nameHi: 'डैशबोर्ड', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Products', nameHi: 'उत्पाद', href: '/dashboard/products', icon: Package },
-  { name: 'Sales', nameHi: 'बिक्री', href: '/dashboard/sales', icon: ShoppingCart },
-  { name: 'Distributors', nameHi: 'वितरक', href: '/dashboard/distributors', icon: Users },
-  { name: 'Alerts', nameHi: 'अलर्ट', href: '/dashboard/settings', icon: Bell },
-  { name: 'Settings', nameHi: 'सेटिंग्स', href: '/dashboard/settings', icon: Settings },
-]
+import { useLanguage } from '@/lib/LanguageContext'
+import LanguageSwitcher from '@/components/dashboard/LanguageSwitcher'
+import LanguageModal from '@/components/dashboard/LanguageModal'
 
 export default function Sidebar() {
   const pathname = usePathname()
+  const { t } = useLanguage()
   const [logoutLoading, setLogoutLoading] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+
+  const navItems = [
+    { name: t.dashboard, href: '/dashboard', icon: LayoutDashboard },
+    { name: t.products, href: '/dashboard/products', icon: Package },
+    { name: t.sales, href: '/dashboard/sales', icon: ShoppingCart },
+    { name: t.distributors, href: '/dashboard/distributors', icon: Users },
+    { name: t.alerts, href: '/dashboard/settings', icon: Bell },
+    { name: t.settings, href: '/dashboard/settings', icon: Settings },
+  ]
 
   const handleLogout = async () => {
     setLogoutLoading(true)
@@ -40,21 +44,21 @@ export default function Sidebar() {
         </div>
         <div>
           <span className="text-lg font-bold tracking-tight text-white block leading-tight">StockGuard</span>
-          <span className="text-[10px] text-slate-400 font-medium tracking-wide">स्टॉक गार्ड</span>
+          <span className="text-[10px] text-slate-400 font-medium tracking-wide">{t.appName !== 'StockGuard' ? t.appName : 'स्टॉक गार्ड'}</span>
         </div>
       </div>
 
       {/* Navigation */}
       <nav className="flex-1 py-4 px-3 space-y-1">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 px-3 mb-3">Menu / मेन्यू</p>
-        {navItems.map((item) => {
+        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 px-3 mb-3">{t.menu}</p>
+        {navItems.map((item, index) => {
           const Icon = item.icon
           const isActive = pathname === item.href || 
             (item.href !== '/dashboard' && pathname.startsWith(item.href))
 
           return (
             <Link
-              key={item.href + item.name}
+              key={item.href + item.name + index}
               href={item.href}
               onClick={() => setMobileOpen(false)}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${
@@ -70,10 +74,7 @@ export default function Sidebar() {
               }`}>
                 <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-400'}`} />
               </div>
-              <div className="flex flex-col">
-                <span className="text-sm leading-tight">{item.name}</span>
-                <span className={`text-[9px] leading-tight ${isActive ? 'text-orange-300/70' : 'text-slate-500'}`}>{item.nameHi}</span>
-              </div>
+              <span className="text-sm leading-tight">{item.name}</span>
               {isActive && (
                 <div className="ml-auto w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse-soft" />
               )}
@@ -81,6 +82,12 @@ export default function Sidebar() {
           )
         })}
       </nav>
+
+      {/* Language Switcher */}
+      <div className="px-3 pb-2">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 px-3 mb-2">🌐 Language</p>
+        <LanguageSwitcher />
+      </div>
 
       {/* Shop Info */}
       <div className="px-3 pb-3">
@@ -90,11 +97,10 @@ export default function Sidebar() {
               <span className="text-xs">🏪</span>
             </div>
             <div>
-              <p className="text-xs font-semibold text-white leading-tight">Ram Medical Store</p>
-              <p className="text-[10px] text-slate-400">राम मेडिकल स्टोर</p>
+              <p className="text-xs font-semibold text-white leading-tight">{t.shopInfo}</p>
             </div>
           </div>
-          <p className="text-[10px] text-slate-500">WhatsApp alerts active ✅</p>
+          <p className="text-[10px] text-slate-500">{t.whatsappActive}</p>
         </div>
       </div>
 
@@ -110,7 +116,7 @@ export default function Sidebar() {
           ) : (
             <LogOut className="w-4 h-4" />
           )}
-          <span className="text-sm">Sign Out / लॉग आउट</span>
+          <span className="text-sm">{t.signOut}</span>
         </button>
       </div>
     </>
@@ -118,6 +124,9 @@ export default function Sidebar() {
 
   return (
     <>
+      {/* Language Modal */}
+      <LanguageModal />
+
       {/* Mobile hamburger */}
       <button
         onClick={() => setMobileOpen(true)}

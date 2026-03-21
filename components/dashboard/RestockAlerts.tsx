@@ -1,4 +1,7 @@
+'use client'
+
 import { AlertTriangle } from 'lucide-react'
+import { useLanguage } from '@/lib/LanguageContext'
 
 interface RestockProduct {
   name: string
@@ -11,6 +14,8 @@ interface Props {
 }
 
 export default function RestockAlerts({ products }: Props) {
+  const { t } = useLanguage()
+
   return (
     <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/60 rounded-2xl p-4 mb-6 animate-fade-in-up">
       <div className="flex items-center gap-2 mb-3">
@@ -18,8 +23,7 @@ export default function RestockAlerts({ products }: Props) {
           <AlertTriangle className="w-4 h-4 text-white" />
         </div>
         <div>
-          <h3 className="font-bold text-amber-800 text-sm">Restock Alert / रीस्टॉक अलर्ट</h3>
-          <p className="text-[10px] text-amber-600/70">Stock running low on these items</p>
+          <h3 className="font-bold text-amber-800 text-sm">{t.restockAlerts}</h3>
         </div>
         <span className="ml-auto text-xs font-bold text-amber-700 bg-amber-200/50 px-2 py-0.5 rounded-full">{products.length}</span>
       </div>
@@ -30,7 +34,7 @@ export default function RestockAlerts({ products }: Props) {
               <span className="font-semibold text-gray-900 text-sm">{p.name}</span>
               <div className="flex items-center gap-2 mt-0.5">
                 <span className="text-[10px] text-gray-500">
-                  Stock: <span className="font-bold text-amber-700">{p.stock}</span>
+                  {t.totalStock}: <span className="font-bold text-amber-700">{p.stock}</span>
                 </span>
                 <span className="text-[10px] text-gray-400">·</span>
                 <span className="text-[10px] text-gray-500">
@@ -39,7 +43,7 @@ export default function RestockAlerts({ products }: Props) {
               </div>
             </div>
             <span className="text-[10px] font-bold text-amber-700 bg-amber-100 px-2.5 py-1 rounded-lg border border-amber-200/50">
-              ⚠️ Low Stock
+              ⚠️ {t.lowStock}
             </span>
           </div>
         ))}

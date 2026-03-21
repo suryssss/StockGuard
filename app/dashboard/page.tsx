@@ -9,6 +9,8 @@ import DashboardWidgets from '@/components/dashboard/DashboardWidgets'
 import RestockAlerts from '@/components/dashboard/RestockAlerts'
 import ExpiryChecker from '@/components/dashboard/ExpiryChecker'
 import SendSummaryButton from '@/components/dashboard/SendSummaryButton'
+import DashboardHeader from '@/components/dashboard/DashboardHeader'
+import SectionLabel from '@/components/dashboard/SectionLabel'
 
 const SHOP_ID = process.env.NEXT_PUBLIC_SHOP_ID || ''
 
@@ -134,39 +136,22 @@ export default async function DashboardPage() {
     hasEscalation: d.returnLogs.filter((r: any) => r.outcome === 'rejected').length >= 2
   }))
 
-  // Get greeting based on time
-  const hour = new Date().getHours()
-  let greeting = 'Good Morning'
-  let greetingHi = 'सुप्रभात'
-  if (hour >= 12 && hour < 17) { greeting = 'Good Afternoon'; greetingHi = 'नमस्कार' }
-  else if (hour >= 17) { greeting = 'Good Evening'; greetingHi = 'शुभ संध्या' }
-
   return (
     <main className="p-4 md:p-6 lg:p-8 w-full max-w-6xl mx-auto flex-1">
       <ExpiryChecker />
       
-      {/* Header with greeting */}
-      <header className="mb-6 animate-fade-in-up">
-        <div className="flex items-center justify-between">
-          <div className="ml-12 md:ml-0">
-            <p className="text-sm text-gray-400 font-medium">{greeting} / {greetingHi} 👋</p>
-            <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">
-              StockGuard Dashboard
-            </h1>
-            <p className="text-xs text-gray-400 mt-0.5">Last updated: {new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</p>
-          </div>
-        </div>
-      </header>
+      {/* Translated Header */}
+      <DashboardHeader />
 
-      {/* Loss Calculator - MUKHYA / मुख्य */}
+      {/* Loss Calculator */}
       <section className="mb-6">
-        <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-3">💰 Loss Calculator / नुकसान कैलकुलेटर</p>
+        <SectionLabel sectionKey="lossCalculator" />
         <LossCalculator data={lossData} />
       </section>
 
       {/* Quick Actions */}
       <section className="mb-6">
-        <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-3">⚡ Quick Actions / त्वरित क्रियाएं</p>
+        <SectionLabel sectionKey="quickActions" />
         <ActionButtons shopId={SHOP_ID} />
       </section>
 
@@ -177,7 +162,7 @@ export default async function DashboardPage() {
 
       {/* Dashboard Stats */}
       <section className="mb-6">
-        <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-3">📊 Overview / अवलोकन</p>
+        <SectionLabel sectionKey="overview" />
         <DashboardWidgets
           itemsSoldToday={itemsSoldToday}
           lowStockCount={lowStockCount}

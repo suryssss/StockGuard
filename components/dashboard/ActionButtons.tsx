@@ -2,12 +2,14 @@
 import { useState } from 'react'
 import BarcodeScanner from '@/components/entry/BarcodeScanner'
 import { PlusCircle, MinusCircle, ScanLine, FileText, X } from 'lucide-react'
+import { useLanguage } from '@/lib/LanguageContext'
 
 interface ActionButtonsProps {
   shopId: string
 }
 
 export default function ActionButtons({ shopId }: ActionButtonsProps) {
+  const { t } = useLanguage()
   const [activeModal, setActiveModal] = useState<'add' | 'sell' | 'scan' | null>(null)
 
   const closeModal = () => setActiveModal(null)
@@ -22,7 +24,7 @@ export default function ActionButtons({ shopId }: ActionButtonsProps) {
           <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-all">
             <ScanLine className="w-6 h-6" />
           </div>
-          <span className="font-bold text-xs">Scan / स्कैन</span>
+          <span className="font-bold text-xs">{t.scanBarcode}</span>
         </button>
         <button
           onClick={() => setActiveModal('add')}
@@ -31,7 +33,7 @@ export default function ActionButtons({ shopId }: ActionButtonsProps) {
           <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-all">
             <PlusCircle className="w-6 h-6" />
           </div>
-          <span className="font-bold text-xs">Add / जोड़ें</span>
+          <span className="font-bold text-xs">{t.upload}</span>
         </button>
         <button
           onClick={() => setActiveModal('sell')}
@@ -40,7 +42,7 @@ export default function ActionButtons({ shopId }: ActionButtonsProps) {
           <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-all">
             <MinusCircle className="w-6 h-6" />
           </div>
-          <span className="font-bold text-xs">Sell / बेचें</span>
+          <span className="font-bold text-xs">{t.sales}</span>
         </button>
       </div>
 
@@ -56,8 +58,7 @@ export default function ActionButtons({ shopId }: ActionButtonsProps) {
                 <ScanLine className="w-5 h-5 text-orange-600" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-gray-900">Scan Product / उत्पाद स्कैन करें</h3>
-                <p className="text-xs text-gray-500">Point camera at barcode / बारकोड पर कैमरा लगाएं</p>
+                <h3 className="text-lg font-bold text-gray-900">{t.scanBarcode}</h3>
               </div>
             </div>
             <BarcodeScanner shopId={shopId} defaultMode="add" onSuccess={closeModal} />
@@ -77,8 +78,7 @@ export default function ActionButtons({ shopId }: ActionButtonsProps) {
                 <PlusCircle className="w-5 h-5 text-emerald-600" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-gray-900">Add Stock / स्टॉक जोड़ें</h3>
-                <p className="text-xs text-gray-500">Enter details manually / विवरण भरें</p>
+                <h3 className="text-lg font-bold text-gray-900">{t.uploadInvoice}</h3>
               </div>
             </div>
             <BarcodeScanner shopId={shopId} defaultMode="add" disableScanner={true} onSuccess={closeModal} />
@@ -98,8 +98,7 @@ export default function ActionButtons({ shopId }: ActionButtonsProps) {
                 <MinusCircle className="w-5 h-5 text-violet-600" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-gray-900">Sell / Remove / बेचें</h3>
-                <p className="text-xs text-gray-500">Scan or enter product to sell / बेचने के लिए उत्पाद डालें</p>
+                <h3 className="text-lg font-bold text-gray-900">{t.sales}</h3>
               </div>
             </div>
             <BarcodeScanner shopId={shopId} defaultMode="sell" onSuccess={closeModal} />

@@ -2,8 +2,10 @@
 
 import { useState } from 'react'
 import { MessageCircle, Loader2, CheckCircle, AlertCircle } from 'lucide-react'
+import { useLanguage } from '@/lib/LanguageContext'
 
 export default function SendSummaryButton() {
+  const { t } = useLanguage()
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [message, setMessage] = useState('')
 
@@ -59,8 +61,8 @@ export default function SendSummaryButton() {
       {status === 'error' && <AlertCircle className="w-5 h-5" />}
       {status === 'idle' && <MessageCircle className="w-5 h-5" />}
 
-      {status === 'idle' && '📲 Send WhatsApp Summary / समरी भेजें'}
-      {status === 'sending' && 'Sending... / भेज रहे हैं...'}
+      {status === 'idle' && `📲 ${t.sendToWhatsApp}`}
+      {status === 'sending' && t.generating}
       {status === 'success' && message}
       {status === 'error' && message}
     </button>

@@ -5,13 +5,17 @@ import { useRouter } from 'next/navigation'
 import { createSupabaseBrowserClient } from '@/lib/supabase-browser'
 import { Mail, Lock, Loader2, AlertCircle, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import { useLanguage } from '@/lib/LanguageContext'
+import LanguageModal from '@/components/dashboard/LanguageModal'
 
 export default function LoginPage() {
   const router = useRouter()
+  const { t, hasSelectedLanguage, setShowLanguageModal } = useLanguage()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [loginSuccess, setLoginSuccess] = useState(false)
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -36,7 +40,13 @@ export default function LoginPage() {
       }
 
       if (data.session) {
-        window.location.href = '/dashboard'
+        // If user hasn't selected a language yet, show the language modal
+        if (!hasSelectedLanguage) {
+          setLoginSuccess(true)
+          setShowLanguageModal(true)
+        } else {
+          window.location.href = '/dashboard'
+        }
       }
     } catch (err: any) {
       setError(err.message || 'Login failed. Please check your credentials.')
@@ -45,8 +55,18 @@ export default function LoginPage() {
     }
   }
 
+  // When language modal closes after login, redirect to dashboard
+  const handleLanguageModalClose = () => {
+    if (loginSuccess) {
+      window.location.href = '/dashboard'
+    }
+  }
+
   return (
     <div className="min-h-screen bg-[#FAFAF7] flex">
+      {/* Language Modal */}
+      <LanguageModalWrapper onComplete={handleLanguageModalClose} loginSuccess={loginSuccess} />
+
       {/* Left side - Branding */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-orange-500 via-orange-600 to-amber-600 relative overflow-hidden">
         {/* Decorative elements */}
@@ -64,30 +84,27 @@ export default function LoginPage() {
             <h1 className="text-5xl font-extrabold text-white leading-tight tracking-tight">
               StockGuard
             </h1>
-            <p className="text-xl text-orange-100 mt-2 font-medium">स्टॉक गार्ड</p>
+            <p className="text-xl text-orange-100 mt-2 font-medium">{t.appName !== 'StockGuard' ? t.appName : 'स्टॉक गार्ड'}</p>
           </div>
           
           <p className="text-lg text-white/90 leading-relaxed max-w-md">
-            Never lose money to expired stock again. Track, alert, and recover — built for Indian retailers.
-          </p>
-          <p className="text-sm text-white/60 mt-2">
-            एक्सपायर्ड स्टॉक से पैसे कभी ना गंवाएं। भारतीय दुकानदारों के लिए बना।
+            {t.appTagline}
           </p>
 
           <div className="mt-12 flex items-center gap-6">
             <div className="text-center">
               <p className="text-3xl font-extrabold text-white">₹15K+</p>
-              <p className="text-xs text-white/60 mt-1">Avg. saved/year</p>
+              <p className="text-xs text-white/60 mt-1">{t.avgSavedYear}</p>
             </div>
             <div className="w-px h-10 bg-white/20" />
             <div className="text-center">
               <p className="text-3xl font-extrabold text-white">5 min</p>
-              <p className="text-xs text-white/60 mt-1">Setup time</p>
+              <p className="text-xs text-white/60 mt-1">{t.setupTime}</p>
             </div>
             <div className="w-px h-10 bg-white/20" />
             <div className="text-center">
               <p className="text-3xl font-extrabold text-white">WhatsApp</p>
-              <p className="text-xs text-white/60 mt-1">Alerts on phone</p>
+              <p className="text-xs text-white/60 mt-1">{t.alertsOnPhone}</p>
             </div>
           </div>
         </div>
@@ -102,12 +119,12 @@ export default function LoginPage() {
               <ShieldIcon className="w-7 h-7 text-white" />
             </div>
             <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">StockGuard</h1>
-            <p className="text-xs text-gray-400 mt-0.5">स्टॉक गार्ड</p>
+            <p className="text-xs text-gray-400 mt-0.5">{t.appName !== 'StockGuard' ? t.appName : 'स्टॉक गार्ड'}</p>
           </div>
 
           <div className="bg-white rounded-2xl border border-gray-200/60 p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-gray-900 mb-1">Welcome back / वापस स्वागत है</h2>
-            <p className="text-gray-400 text-sm mb-6">Sign in to manage your inventory</p>
+            <h2 className="text-xl font-bold text-gray-900 mb-1">{t.welcomeBack}</h2>
+            <p className="text-gray-400 text-sm mb-6">{t.signInSubtitle}</p>
 
             {error && (
               <div className="bg-red-50 border border-red-200/60 rounded-xl px-4 py-3 mb-5 flex items-start gap-3">
@@ -118,7 +135,7 @@ export default function LoginPage() {
 
             <form onSubmit={handleLogin} className="space-y-5">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email / ईमेल</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.email}</label>
                 <div className="relative">
                   <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
@@ -126,7 +143,7 @@ export default function LoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:border-orange-400 transition-all"
-                    placeholder="you@example.com"
+                    placeholder={t.emailPlaceholder}
                     autoComplete="email"
                     disabled={loading}
                   />
@@ -134,7 +151,7 @@ export default function LoginPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Password / पासवर्ड</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.password}</label>
                 <div className="relative">
                   <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
@@ -157,11 +174,11 @@ export default function LoginPage() {
                 {loading ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    Signing in...
+                    {t.signingIn}
                   </>
                 ) : (
                   <>
-                    Sign In / साइन इन
+                    {t.signIn}
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
@@ -170,21 +187,43 @@ export default function LoginPage() {
 
             <div className="mt-6 pt-5 border-t border-gray-100 text-center">
               <p className="text-gray-500 text-sm">
-                Don&apos;t have an account?{' '}
+                {t.noAccount}{' '}
                 <Link href="/signup" className="text-orange-600 hover:text-orange-700 font-semibold transition-colors">
-                  Register / रजिस्टर करें
+                  {t.register}
                 </Link>
               </p>
             </div>
           </div>
 
           <p className="text-center text-[10px] text-gray-400 mt-4">
-            Powered by Supabase · Built for Indian Retailers 🇮🇳
+            {t.poweredBy}
           </p>
         </div>
       </div>
     </div>
   )
+}
+
+// Wrapper component to handle language modal completion
+function LanguageModalWrapper({ onComplete, loginSuccess }: { onComplete: () => void; loginSuccess: boolean }) {
+  const { showLanguageModal } = useLanguage()
+  
+  // Watch for modal closing after login
+  const [wasShowing, setWasShowing] = useState(false)
+  
+  if (showLanguageModal && !wasShowing) {
+    setWasShowing(true)
+  }
+  
+  if (!showLanguageModal && wasShowing && loginSuccess) {
+    // Modal just closed after login
+    setTimeout(() => {
+      onComplete()
+    }, 100)
+    setWasShowing(false)
+  }
+
+  return <LanguageModal />
 }
 
 function ShieldIcon(props: any) {
