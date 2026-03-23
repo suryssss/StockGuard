@@ -99,6 +99,7 @@ export default function BatchTable({ batches, shopId }: Props) {
 
   return (
     <div className="space-y-6">
+
       {/* SECTION 1: EXPIRED ITEMS */}
       {expiredBatches.length > 0 && (
         <div className="bg-white rounded-3xl border-2 border-red-200 shadow-xl shadow-red-100/40 overflow-hidden">
@@ -110,9 +111,7 @@ export default function BatchTable({ batches, shopId }: Props) {
               <Skull className="w-6 h-6 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-black text-white text-base tracking-tight">
-                {t.expiredItems}
-              </h3>
+              <h3 className="font-black text-white text-base tracking-tight">{t.expiredItems}</h3>
               <p className="text-red-100 text-xs font-medium mt-0.5">
                 {expiredBatches.length} {t.batchExpired}
                 {totalExpiredValue > 0 && ` · ₹${totalExpiredValue.toLocaleString('en-IN')} ${t.atRiskValue}`}
@@ -173,10 +172,8 @@ export default function BatchTable({ batches, shopId }: Props) {
               ))}
 
               {expiredBatches.length > 1 && (
-                <div className="pt-2 border-t border-red-100 flex items-center justify-between">
-                  <p className="text-xs text-red-600 font-bold">
-                    💡 {t.removeExpiredTip}
-                  </p>
+                <div className="pt-2 border-t border-red-100">
+                  <p className="text-xs text-red-600 font-bold">💡 {t.removeExpiredTip}</p>
                 </div>
               )}
             </div>
@@ -195,9 +192,7 @@ export default function BatchTable({ batches, shopId }: Props) {
               <AlertTriangle className="w-6 h-6 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-black text-white text-base tracking-tight">
-                {t.criticalBatches}
-              </h3>
+              <h3 className="font-black text-white text-base tracking-tight">{t.criticalBatches}</h3>
               <p className="text-amber-100 text-xs font-medium mt-0.5">
                 {criticalBatches.length} {t.batchesCritical}
                 {totalCriticalValue > 0 && ` · ₹${totalCriticalValue.toLocaleString('en-IN')} ${t.atRiskValue}`}
@@ -313,7 +308,7 @@ export default function BatchTable({ batches, shopId }: Props) {
                 <th className="px-5 py-3.5">{t.daysLeft}</th>
                 <th className="px-5 py-3.5">{t.value}</th>
                 <th className="px-5 py-3.5">{t.status}</th>
-                <th className="px-5 py-3.5">{t.sellBtn}</th>
+                <th className="px-5 py-3.5"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
@@ -391,7 +386,7 @@ export default function BatchTable({ batches, shopId }: Props) {
               {filtered.length > 0 && activeBatches.length === 0 && (
                 <tr>
                   <td colSpan={7} className="px-5 py-12 text-center">
-                    <p className="text-slate-500 font-bold text-sm">{t.allBatchesCritical}</p>
+                    <p className="text-gray-500 font-medium text-sm">{t.allBatchesCritical}</p>
                   </td>
                 </tr>
               )}

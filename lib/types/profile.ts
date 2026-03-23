@@ -25,13 +25,13 @@ export interface ProfileFormData {
 }
 
 export const BUSINESS_CATEGORIES = [
-  { value: 'pharmacy', label: 'Pharmacy / Medical Store', labelHi: 'फार्मेसी / मेडिकल स्टोर' },
-  { value: 'grocery', label: 'Grocery / Kirana', labelHi: 'किराना / ग्रोसरी' },
-  { value: 'electronics', label: 'Electronics', labelHi: 'इलेक्ट्रॉनिक्स' },
-  { value: 'clothing', label: 'Clothing / Garments', labelHi: 'कपड़े / गारमेंट्स' },
-  { value: 'stationery', label: 'Stationery / Books', labelHi: 'स्टेशनरी / किताबें' },
-  { value: 'hardware', label: 'Hardware / Tools', labelHi: 'हार्डवेयर / उपकरण' },
-  { value: 'cosmetics', label: 'Cosmetics / Beauty', labelHi: 'कॉस्मेटिक्स / ब्यूटी' },
-  { value: 'fmcg', label: 'FMCG / Daily Essentials', labelHi: 'FMCG / दैनिक ज़रूरतें' },
-  { value: 'other', label: 'Other', labelHi: 'अन्य' },
+  { value: 'pharmacy', label: 'Pharmacy / Medical Store' },
+  { value: 'grocery', label: 'Grocery / Kirana' },
+  { value: 'electronics', label: 'Electronics' },
+  { value: 'clothing', label: 'Clothing / Garments' },
+  { value: 'stationery', label: 'Stationery / Books' },
+  { value: 'hardware', label: 'Hardware / Tools' },
+  { value: 'cosmetics', label: 'Cosmetics / Beauty' },
+  { value: 'fmcg', label: 'FMCG / Daily Essentials' },
+  { value: 'other', label: 'Other' },
 ] as const

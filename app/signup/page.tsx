@@ -148,8 +148,8 @@ export default function SignupPage() {
           </div>
           
           <p className="text-lg text-white/90 leading-relaxed max-w-md">
-              {t.appTagline}
-            </p>
+            {t.appTagline}
+          </p>
 
           <div className="mt-12 space-y-4">
             <div className="flex items-center gap-3">
