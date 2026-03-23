@@ -48,6 +48,27 @@ export async function sendWhatsAppMessage(phone: string, message: string): Promi
   return sendWhatsApp(phone, message);
 }
 
+export async function sendWhatsAppMedia(to: string, message: string, mediaUrl: string): Promise<void> {
+  let dest = to.trim()
+  if (!dest.startsWith('whatsapp:')) {
+    dest = `whatsapp:${dest}`
+  }
+
+  let from = WHATSAPP_FROM.trim()
+  if (!from.startsWith('whatsapp:')) {
+    from = `whatsapp:${from}`
+  }
+
+  console.log(`Twilio: WhatsApp Media to ${dest} from ${from} | Media: ${mediaUrl}`)
+
+  await client.messages.create({
+    from: from,
+    to: dest,
+    body: message,
+    mediaUrl: [mediaUrl],
+  })
+}
+
 export async function sendAlert(to: string, message: string): Promise<void> {
     try {
         // Try WhatsApp first
