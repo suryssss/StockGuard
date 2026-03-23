@@ -7,9 +7,14 @@ import * as XLSX from 'xlsx'
 import { sendWhatsAppMedia } from '@/lib/twilio'
 
 // Create a service-role client for storage operations
+// Service role key is REQUIRED to bypass RLS for storage bucket operations
+const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+if (!serviceRoleKey) {
+  console.warn('WARNING: SUPABASE_SERVICE_ROLE_KEY is not set. Storage operations will fail due to RLS policies.')
+}
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  serviceRoleKey || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 
 async function resolveShopInfoFromAuth() {
@@ -143,33 +148,46 @@ export async function POST(req: NextRequest) {
     const fileName = `${shopId}/Sales_${reportDate}_${Date.now()}.xlsx`
     console.log('WhatsApp Export: Preparing upload to bucket:', bucketName)
 
-    // Check if bucket exists
-    const { data: buckets, error: listErr } = await supabaseAdmin.storage.listBuckets()
-    if (listErr) {
-      console.error('WhatsApp Export: Failed to list buckets:', listErr)
-      throw new Error(`Failed to verify storage: ${listErr.message}`)
-    }
+    // Try to upload directly first — bucket may already exist
+    // Only attempt bucket creation if upload fails with "Bucket not found"
 
-    const exists = buckets.some((b) => b.name === bucketName)
-    if (!exists) {
-      console.log('WhatsApp Export: Creating missing bucket:', bucketName)
-      const { error: createErr } = await supabaseAdmin.storage.createBucket(bucketName, {
-        public: true,
-        fileSizeLimit: 5242880, // 5MB limit
-      })
-      if (createErr && createErr.message !== 'Already exists') {
-        console.error('WhatsApp Export: Failed to create bucket:', createErr)
-        throw new Error(`Could not create storage bucket: ${createErr.message}`)
-      }
-    }
 
     console.log('WhatsApp Export: Uploading file:', fileName)
-    const { error: uploadErr } = await supabaseAdmin.storage
+    let { error: uploadErr } = await supabaseAdmin.storage
       .from(bucketName)
       .upload(fileName, buf, {
         contentType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         upsert: true,
       })
+
+    // If upload failed (bucket might not exist), try creating the bucket and retry
+    if (uploadErr) {
+      console.log('WhatsApp Export: First upload attempt failed, trying to create bucket:', uploadErr.message)
+      
+      const { error: createErr } = await supabaseAdmin.storage.createBucket(bucketName, {
+        public: true,
+        fileSizeLimit: 5242880, // 5MB
+      })
+
+      if (createErr && !createErr.message.includes('Already exists') && !createErr.message.includes('already exists')) {
+        console.error('WhatsApp Export: Failed to create bucket:', createErr)
+        throw new Error(
+          `Storage bucket "${bucketName}" does not exist and could not be created. ` +
+          `This is likely because SUPABASE_SERVICE_ROLE_KEY is not set in your environment variables. ` +
+          `Either set it in .env.local, or manually create a public bucket named "${bucketName}" in the Supabase dashboard.`
+        )
+      }
+
+      // Retry the upload after bucket creation
+      console.log('WhatsApp Export: Retrying upload after bucket creation...')
+      const retry = await supabaseAdmin.storage
+        .from(bucketName)
+        .upload(fileName, buf, {
+          contentType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          upsert: true,
+        })
+      uploadErr = retry.error
+    }
 
     if (uploadErr) {
       console.error('WhatsApp Export: Upload failed:', uploadErr)
