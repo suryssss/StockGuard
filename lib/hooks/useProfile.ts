@@ -70,7 +70,7 @@ export function useProfile(): UseProfileReturn {
       }
 
       setProfile(data.profile)
-      setSuccess('Profile updated successfully! / प्रोफ़ाइल अपडेट हो गई!')
+      setSuccess('Profile updated successfully!')
       return true
     } catch (err: any) {
       setError(err.message || 'Update failed')
@@ -101,7 +101,7 @@ export function useProfile(): UseProfileReturn {
 
       // Update local state
       setProfile(prev => prev ? { ...prev, avatar_url: data.avatar_url } : prev)
-      setSuccess('Avatar updated! / फ़ोटो अपडेट हो गयी!')
+      setSuccess('Avatar updated!')
       return data.avatar_url
     } catch (err: any) {
       setError(err.message || 'Upload failed')

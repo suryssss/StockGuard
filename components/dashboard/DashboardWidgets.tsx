@@ -58,7 +58,7 @@ export default function DashboardWidgets({
       borderColor: "border-red-200/60"
     },
     ...(expiredCount > 0 ? [{
-      title: 'Expired / एक्सपायर्ड',
+      title: t.expired,
       value: expiredCount,
       icon: <Skull className="w-5 h-5 text-red-600" />,
       bg: "bg-gradient-to-br from-red-200 to-red-100",

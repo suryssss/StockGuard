@@ -84,7 +84,7 @@ export default function LoginPage() {
             <h1 className="text-5xl font-extrabold text-white leading-tight tracking-tight">
               StockGuard
             </h1>
-            <p className="text-xl text-orange-100 mt-2 font-medium">{t.appName !== 'StockGuard' ? t.appName : 'स्टॉक गार्ड'}</p>
+            <p className="text-xl text-orange-100 mt-2 font-medium">{t.appNameHindi || t.appName}</p>
           </div>
           
           <p className="text-lg text-white/90 leading-relaxed max-w-md">
@@ -119,7 +119,7 @@ export default function LoginPage() {
               <ShieldIcon className="w-7 h-7 text-white" />
             </div>
             <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">StockGuard</h1>
-            <p className="text-xs text-gray-400 mt-0.5">{t.appName !== 'StockGuard' ? t.appName : 'स्टॉक गार्ड'}</p>
+            <p className="text-xs text-gray-400 mt-0.5">{t.appNameHindi || t.appName}</p>
           </div>
 
           <div className="bg-white rounded-2xl border border-gray-200/60 p-8 shadow-sm">

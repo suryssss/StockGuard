@@ -1,7 +1,8 @@
 'use client'
-import { useState } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import ExpiryBadge from "./ExpiryBadge"
 import { MinusCircle, Loader2, Search, Skull, AlertTriangle, Package, Trash2, ChevronDown, ChevronUp } from 'lucide-react'
+import { useLanguage } from '@/lib/LanguageContext'
 
 interface Batch {
   id: string
@@ -20,6 +21,7 @@ interface Props {
 }
 
 export default function BatchTable({ batches, shopId }: Props) {
+  const { t } = useLanguage()
   const [sellingId, setSellingId] = useState<string | null>(null)
   const [sellQty, setSellQty] = useState('1')
   const [loading, setLoading] = useState(false)
@@ -29,7 +31,7 @@ export default function BatchTable({ batches, shopId }: Props) {
   const [expiredOpen, setExpiredOpen] = useState(true)
   const [criticalOpen, setCriticalOpen] = useState(true)
 
-  const handleSell = async (batch: Batch) => {
+  const handleSell = useCallback(async (batch: Batch) => {
     const qty = parseInt(sellQty)
     if (!qty || qty < 1) return
     setLoading(true)
@@ -56,10 +58,9 @@ export default function BatchTable({ batches, shopId }: Props) {
     } finally {
       setLoading(false)
     }
-  }
+  }, [sellQty, shopId])
 
-  // Remove entire expired batch (sell all remaining quantity to clear it)
-  const handleRemoveExpired = async (batch: Batch) => {
+  const handleRemoveExpired = useCallback(async (batch: Batch) => {
     setRemovingId(batch.id)
     setError('')
     try {
@@ -82,34 +83,25 @@ export default function BatchTable({ batches, shopId }: Props) {
     } finally {
       setRemovingId(null)
     }
-  }
+  }, [shopId])
 
-  const filtered = batches.filter(b =>
+  const filtered = useMemo(() => batches.filter(b =>
     b.product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     (b.batchNumber && b.batchNumber.toLowerCase().includes(searchTerm.toLowerCase()))
-  )
+  ), [batches, searchTerm])
 
-  // Three-way split
-  const expiredBatches = filtered.filter(b => b.daysUntilExpiry <= 0)
-  const criticalBatches = filtered.filter(b => b.daysUntilExpiry > 0 && b.daysUntilExpiry <= 15)
-  const activeBatches = filtered.filter(b => b.daysUntilExpiry > 15)
+  const expiredBatches = useMemo(() => filtered.filter(b => b.daysUntilExpiry <= 0), [filtered])
+  const criticalBatches = useMemo(() => filtered.filter(b => b.daysUntilExpiry > 0 && b.daysUntilExpiry <= 15), [filtered])
+  const activeBatches = useMemo(() => filtered.filter(b => b.daysUntilExpiry > 15), [filtered])
 
-  const totalExpiredValue = expiredBatches.reduce((sum, b) => sum + (b.purchasePrice ? b.quantity * b.purchasePrice : 0), 0)
-  const totalCriticalValue = criticalBatches.reduce((sum, b) => sum + (b.purchasePrice ? b.quantity * b.purchasePrice : 0), 0)
-
-  const formatDate = (dateStr?: string) => {
-    if (!dateStr) return '--'
-    return new Date(dateStr).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
-  }
+  const totalExpiredValue = useMemo(() => expiredBatches.reduce((sum, b) => sum + (b.purchasePrice ? b.quantity * b.purchasePrice : 0), 0), [expiredBatches])
+  const totalCriticalValue = useMemo(() => criticalBatches.reduce((sum, b) => sum + (b.purchasePrice ? b.quantity * b.purchasePrice : 0), 0), [criticalBatches])
 
   return (
     <div className="space-y-6">
-      {/* ═══════════════════════════════════════════════════ */}
-      {/* SECTION 1: EXPIRED ITEMS                           */}
-      {/* ═══════════════════════════════════════════════════ */}
+      {/* SECTION 1: EXPIRED ITEMS */}
       {expiredBatches.length > 0 && (
         <div className="bg-white rounded-3xl border-2 border-red-200 shadow-xl shadow-red-100/40 overflow-hidden">
-          {/* Header */}
           <button
             onClick={() => setExpiredOpen(!expiredOpen)}
             className="w-full px-6 py-5 bg-gradient-to-r from-red-600 to-red-500 flex items-center gap-4 text-left"
@@ -119,11 +111,11 @@ export default function BatchTable({ batches, shopId }: Props) {
             </div>
             <div className="flex-1 min-w-0">
               <h3 className="font-black text-white text-base tracking-tight">
-                Expired Items / एक्सपायर्ड सामान
+                {t.expiredItems}
               </h3>
               <p className="text-red-100 text-xs font-medium mt-0.5">
-                {expiredBatches.length} batch{expiredBatches.length > 1 ? 'es' : ''} expired
-                {totalExpiredValue > 0 && ` · ₹${totalExpiredValue.toLocaleString('en-IN')} at risk`}
+                {expiredBatches.length} {t.batchExpired}
+                {totalExpiredValue > 0 && ` · ₹${totalExpiredValue.toLocaleString('en-IN')} ${t.atRiskValue}`}
               </p>
             </div>
             <span className="bg-white text-red-600 text-sm font-black px-4 py-1.5 rounded-xl shadow-sm shrink-0">
@@ -136,7 +128,6 @@ export default function BatchTable({ batches, shopId }: Props) {
             )}
           </button>
 
-          {/* Body */}
           {expiredOpen && (
             <div className="p-4 space-y-3 bg-red-50/30">
               {expiredBatches.map(b => (
@@ -144,23 +135,21 @@ export default function BatchTable({ batches, shopId }: Props) {
                   key={b.id}
                   className="bg-white rounded-2xl p-4 border border-red-100 flex flex-col sm:flex-row sm:items-center gap-4 hover:shadow-md transition-shadow"
                 >
-                  {/* Product Info */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse shrink-0" />
                       <p className="font-bold text-slate-900 text-sm truncate">{b.product.name}</p>
                     </div>
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-slate-500 font-medium">
-                      <span>Batch: <span className="text-slate-700 font-mono">{b.batchNumber || 'N/A'}</span></span>
-                      <span>Qty: <span className="text-slate-700 font-bold">{b.quantity}</span></span>
-                      <span>Expired: <span className="text-red-600 font-bold">{Math.abs(b.daysUntilExpiry)} days ago</span></span>
+                      <span>{t.batch}: <span className="text-slate-700 font-mono">{b.batchNumber || 'N/A'}</span></span>
+                      <span>{t.qty}: <span className="text-slate-700 font-bold">{b.quantity}</span></span>
+                      <span>{t.expired}: <span className="text-red-600 font-bold">{Math.abs(b.daysUntilExpiry)} {t.expiredDaysAgo}</span></span>
                       {b.purchasePrice && (
-                        <span>Loss: <span className="text-red-600 font-bold">₹{(b.quantity * b.purchasePrice).toLocaleString('en-IN')}</span></span>
+                        <span>{t.loss}: <span className="text-red-600 font-bold">₹{(b.quantity * b.purchasePrice).toLocaleString('en-IN')}</span></span>
                       )}
                     </div>
                   </div>
 
-                  {/* Actions */}
                   <div className="flex items-center gap-2 shrink-0">
                     <ExpiryBadge days={b.daysUntilExpiry} />
                     <button
@@ -173,7 +162,7 @@ export default function BatchTable({ batches, shopId }: Props) {
                       ) : (
                         <Trash2 className="w-3.5 h-3.5" />
                       )}
-                      Remove / हटाएं
+                      {t.removeBtn}
                     </button>
                   </div>
 
@@ -183,11 +172,10 @@ export default function BatchTable({ batches, shopId }: Props) {
                 </div>
               ))}
 
-              {/* Bulk Action */}
               {expiredBatches.length > 1 && (
                 <div className="pt-2 border-t border-red-100 flex items-center justify-between">
                   <p className="text-xs text-red-600 font-bold">
-                    💡 Remove all expired items to keep your inventory clean
+                    💡 {t.removeExpiredTip}
                   </p>
                 </div>
               )}
@@ -196,12 +184,9 @@ export default function BatchTable({ batches, shopId }: Props) {
         </div>
       )}
 
-      {/* ═══════════════════════════════════════════════════ */}
-      {/* SECTION 2: CRITICAL BATCHES (EXPIRING SOON)        */}
-      {/* ═══════════════════════════════════════════════════ */}
+      {/* SECTION 2: CRITICAL BATCHES */}
       {criticalBatches.length > 0 && (
         <div className="bg-white rounded-3xl border-2 border-amber-200 shadow-xl shadow-amber-100/40 overflow-hidden">
-          {/* Header */}
           <button
             onClick={() => setCriticalOpen(!criticalOpen)}
             className="w-full px-6 py-5 bg-gradient-to-r from-amber-500 to-orange-500 flex items-center gap-4 text-left"
@@ -211,11 +196,11 @@ export default function BatchTable({ batches, shopId }: Props) {
             </div>
             <div className="flex-1 min-w-0">
               <h3 className="font-black text-white text-base tracking-tight">
-                Critical Batches / गंभीर बैच
+                {t.criticalBatches}
               </h3>
               <p className="text-amber-100 text-xs font-medium mt-0.5">
-                {criticalBatches.length} batch{criticalBatches.length > 1 ? 'es' : ''} expiring within 15 days
-                {totalCriticalValue > 0 && ` · ₹${totalCriticalValue.toLocaleString('en-IN')} at risk`}
+                {criticalBatches.length} {t.batchesCritical}
+                {totalCriticalValue > 0 && ` · ₹${totalCriticalValue.toLocaleString('en-IN')} ${t.atRiskValue}`}
               </p>
             </div>
             <span className="bg-white text-amber-600 text-sm font-black px-4 py-1.5 rounded-xl shadow-sm shrink-0">
@@ -228,28 +213,25 @@ export default function BatchTable({ batches, shopId }: Props) {
             )}
           </button>
 
-          {/* Body */}
           {criticalOpen && (
             <div className="p-4 space-y-3 bg-amber-50/30">
               {criticalBatches.map(b => (
                 <div key={b.id} className="bg-white rounded-2xl p-4 border border-amber-100 flex flex-col sm:flex-row sm:items-center gap-4 hover:shadow-md transition-shadow">
-                  {/* Product Info */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse shrink-0" />
                       <p className="font-bold text-slate-900 text-sm truncate">{b.product.name}</p>
                     </div>
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-slate-500 font-medium">
-                      <span>Batch: <span className="text-slate-700 font-mono">{b.batchNumber || 'N/A'}</span></span>
-                      <span>Qty: <span className="text-slate-700 font-bold">{b.quantity}</span></span>
-                      <span>Expires in: <span className="text-amber-600 font-bold">{b.daysUntilExpiry} day{b.daysUntilExpiry > 1 ? 's' : ''}</span></span>
+                      <span>{t.batch}: <span className="text-slate-700 font-mono">{b.batchNumber || 'N/A'}</span></span>
+                      <span>{t.qty}: <span className="text-slate-700 font-bold">{b.quantity}</span></span>
+                      <span>{t.expiresIn}: <span className="text-amber-600 font-bold">{b.daysUntilExpiry} {t.daysLeft}</span></span>
                       {b.purchasePrice && (
-                        <span>Value: <span className="text-slate-700 font-bold">₹{(b.quantity * b.purchasePrice).toLocaleString('en-IN')}</span></span>
+                        <span>{t.value}: <span className="text-slate-700 font-bold">₹{(b.quantity * b.purchasePrice).toLocaleString('en-IN')}</span></span>
                       )}
                     </div>
                   </div>
 
-                  {/* Actions */}
                   <div className="flex items-center gap-2 shrink-0">
                     <ExpiryBadge days={b.daysUntilExpiry} />
                     {b.quantity > 0 && (
@@ -282,7 +264,7 @@ export default function BatchTable({ batches, shopId }: Props) {
                           onClick={() => { setSellingId(b.id); setSellQty('1'); setError('') }}
                           className="flex items-center gap-1.5 text-xs text-orange-600 hover:text-orange-700 font-bold transition-all bg-orange-50 hover:bg-orange-100 px-4 py-2.5 rounded-xl"
                         >
-                          <MinusCircle className="w-3.5 h-3.5" /> Sell / बेचें
+                          <MinusCircle className="w-3.5 h-3.5" /> {t.sellBtn}
                         </button>
                       )
                     )}
@@ -297,26 +279,23 @@ export default function BatchTable({ batches, shopId }: Props) {
         </div>
       )}
 
-      {/* ═══════════════════════════════════════════════════ */}
-      {/* SECTION 3: ACTIVE INVENTORY TABLE                  */}
-      {/* ═══════════════════════════════════════════════════ */}
+      {/* SECTION 3: ACTIVE INVENTORY TABLE */}
       <div className="bg-white rounded-3xl border border-slate-200 shadow-xl shadow-slate-100/30 overflow-hidden">
-        {/* Header */}
         <div className="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center gap-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-emerald-50 rounded-2xl flex items-center justify-center border border-emerald-100 shrink-0">
               <Package className="w-5 h-5 text-emerald-600" />
             </div>
             <div>
-              <h2 className="text-base font-black text-slate-900 tracking-tight">Active Inventory / सक्रिय इन्वेंटरी</h2>
-              <p className="text-[11px] text-slate-400 font-medium">{activeBatches.length} active batches</p>
+              <h2 className="text-base font-black text-slate-900 tracking-tight">{t.activeInventory}</h2>
+              <p className="text-[11px] text-slate-400 font-medium">{activeBatches.length} {t.activeBatchCount}</p>
             </div>
           </div>
           <div className="sm:ml-auto relative">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
-              placeholder="Search product... / खोजें..."
+              placeholder={t.searchProduct}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-orange-500/10 focus:border-orange-300 outline-none w-full sm:w-64 transition-all font-medium"
@@ -324,18 +303,17 @@ export default function BatchTable({ batches, shopId }: Props) {
           </div>
         </div>
 
-        {/* Table */}
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
             <thead className="bg-slate-50/80 text-[10px] text-slate-400 font-black uppercase tracking-widest border-b border-slate-100">
               <tr>
-                <th className="px-5 py-3.5">Product / उत्पाद</th>
-                <th className="px-5 py-3.5">Batch</th>
-                <th className="px-5 py-3.5">Qty</th>
-                <th className="px-5 py-3.5">Days Left</th>
-                <th className="px-5 py-3.5">Value / मूल्य</th>
-                <th className="px-5 py-3.5">Status</th>
-                <th className="px-5 py-3.5">Action</th>
+                <th className="px-5 py-3.5">{t.product}</th>
+                <th className="px-5 py-3.5">{t.batch}</th>
+                <th className="px-5 py-3.5">{t.qty}</th>
+                <th className="px-5 py-3.5">{t.daysLeft}</th>
+                <th className="px-5 py-3.5">{t.value}</th>
+                <th className="px-5 py-3.5">{t.status}</th>
+                <th className="px-5 py-3.5">{t.sellBtn}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-50">
@@ -388,7 +366,7 @@ export default function BatchTable({ batches, shopId }: Props) {
                           onClick={() => { setSellingId(b.id); setSellQty('1'); setError('') }}
                           className="flex items-center gap-1.5 text-xs text-orange-600 hover:text-orange-700 font-bold transition-all hover:bg-orange-50 px-3 py-2 rounded-xl opacity-0 group-hover:opacity-100"
                         >
-                          <MinusCircle className="w-3.5 h-3.5" /> Sell
+                          <MinusCircle className="w-3.5 h-3.5" /> {t.sellBtn}
                         </button>
                       )
                     )}
@@ -405,10 +383,7 @@ export default function BatchTable({ batches, shopId }: Props) {
                       <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center">
                         <Package className="w-7 h-7 text-slate-300" />
                       </div>
-                      <div>
-                        <p className="text-slate-500 font-bold">No batches found</p>
-                        <p className="text-slate-400 text-xs">कोई बैच नहीं मिला</p>
-                      </div>
+                      <p className="text-slate-500 font-bold">{t.noBatchesFound}</p>
                     </div>
                   </td>
                 </tr>
@@ -416,10 +391,7 @@ export default function BatchTable({ batches, shopId }: Props) {
               {filtered.length > 0 && activeBatches.length === 0 && (
                 <tr>
                   <td colSpan={7} className="px-5 py-12 text-center">
-                    <div className="flex flex-col items-center gap-2">
-                      <p className="text-slate-500 font-bold text-sm">All batches are either expired or critical</p>
-                      <p className="text-slate-400 text-xs">Check the sections above / ऊपर की धाराएँ देखें</p>
-                    </div>
+                    <p className="text-slate-500 font-bold text-sm">{t.allBatchesCritical}</p>
                   </td>
                 </tr>
               )}

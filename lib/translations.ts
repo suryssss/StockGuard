@@ -144,6 +144,79 @@ export type TranslationKeys = {
   // Summary Button
   sendSummaryDesc: string
   generating: string
+
+  // Batch Table - Section headers
+  expiredItems: string
+  criticalBatches: string
+  activeInventory: string
+  batchExpired: string
+  batchesCritical: string
+  activeBatchCount: string
+  atRiskValue: string
+
+  // Batch Table - Labels
+  batch: string
+  qty: string
+  expiredDaysAgo: string
+  expiresIn: string
+  loss: string
+  value: string
+  product: string
+  removeBtn: string
+  sellBtn: string
+  noBatchesFound: string
+  allBatchesCritical: string
+  removeExpiredTip: string
+  searchProduct: string
+
+  // Expiry Badge
+  expiredBadge: string
+  removeNow: string
+  expiringSoon: string
+  returnNow: string
+  alertSoon: string
+  safeBadge: string
+
+  // Sidebar
+  appNameHindi: string
+  language: string
+  activeSeller: string
+
+  // Settings
+  changeLanguage: string
+  chooseAppLanguage: string
+  alwaysIncludeCountry: string
+
+  // Signup
+  createAccount: string
+  setupShopMinutes: string
+  whatsappAlertsExpiring: string
+  scanBarcodeInvoice: string
+  trackLossRecover: string
+  builtForShops: string
+  shopNameLabel: string
+  whatsappNumberLabel: string
+  includeCountryCode: string
+  passwordLabel: string
+  confirmLabel: string
+  creatingAccount: string
+  accountCreated: string
+  redirecting: string
+  checkEmailConfirmation: string
+  goToLogin: string
+  alreadyHaveAccount: string
+
+  // Restock
+  restockItems: string
+  restockNotify: string
+  restockSending: string
+  restockSent: string
+  restockFailed: string
+  restockVoice: string
+  restockVoicePlaceholder: string
+  restockListening: string
+  restockStopListening: string
+  minStock: string
 }
 
 export const translations: Record<LanguageCode, TranslationKeys> = {
@@ -243,6 +316,72 @@ export const translations: Record<LanguageCode, TranslationKeys> = {
     alertsOnPhone: 'Alerts on phone',
     sendSummaryDesc: 'Get a complete daily summary on WhatsApp',
     generating: 'Generating...',
+
+    expiredItems: 'Expired Items',
+    criticalBatches: 'Critical Batches',
+    activeInventory: 'Active Inventory',
+    batchExpired: 'batch expired',
+    batchesCritical: 'batch expiring within 15 days',
+    activeBatchCount: 'active batches',
+    atRiskValue: 'at risk',
+
+    batch: 'Batch',
+    qty: 'Qty',
+    expiredDaysAgo: 'days ago',
+    expiresIn: 'Expires in',
+    loss: 'Loss',
+    value: 'Value',
+    product: 'Product',
+    removeBtn: 'Remove',
+    sellBtn: 'Sell',
+    noBatchesFound: 'No batches found',
+    allBatchesCritical: 'All batches are either expired or critical',
+    removeExpiredTip: 'Remove all expired items to keep your inventory clean',
+    searchProduct: 'Search product...',
+
+    expiredBadge: 'EXPIRED',
+    removeNow: 'REMOVE NOW',
+    expiringSoon: 'EXPIRING SOON',
+    returnNow: 'RETURN NOW',
+    alertSoon: 'ALERT SOON',
+    safeBadge: 'SAFE',
+
+    appNameHindi: '',
+    language: 'Language',
+    activeSeller: 'Active Seller',
+
+    changeLanguage: 'Change Language',
+    chooseAppLanguage: 'Choose your preferred app language',
+    alwaysIncludeCountry: 'Always include country code (e.g. +91). Messages will be sent here.',
+
+    createAccount: 'Create Account',
+    setupShopMinutes: 'Set up your shop in minutes',
+    whatsappAlertsExpiring: 'WhatsApp alerts for expiring stock',
+    scanBarcodeInvoice: 'Scan barcode or photograph invoice',
+    trackLossRecover: 'Track losses and recover returns',
+    builtForShops: 'Built for kirana & medical shops',
+    shopNameLabel: 'Shop Name',
+    whatsappNumberLabel: 'WhatsApp Number',
+    includeCountryCode: 'Include country code (+91)',
+    passwordLabel: 'Password',
+    confirmLabel: 'Confirm',
+    creatingAccount: 'Creating account...',
+    accountCreated: 'Account Created!',
+    redirecting: 'Redirecting to dashboard...',
+    checkEmailConfirmation: 'If not redirected, check your email for confirmation.',
+    goToLogin: 'Go to Login',
+    alreadyHaveAccount: 'Already have an account?',
+
+    restockItems: 'Restock Items',
+    restockNotify: 'Notify Distributor',
+    restockSending: 'Sending notification...',
+    restockSent: 'Notification sent to distributor!',
+    restockFailed: 'Failed to send notification',
+    restockVoice: 'Voice Restock',
+    restockVoicePlaceholder: 'Say: "Restock 20 rice packets"',
+    restockListening: 'Listening...',
+    restockStopListening: 'Stop Listening',
+    minStock: 'Min',
   },
 
   te: {
@@ -341,6 +480,66 @@ export const translations: Record<LanguageCode, TranslationKeys> = {
     alertsOnPhone: 'ఫోన్‌లో అలర్ట్‌లు',
     sendSummaryDesc: 'WhatsApp లో పూర్తి రోజువారీ సారాంశం పొందండి',
     generating: 'జనరేట్ అవుతోంది...',
+
+    expiredItems: 'గడువు ముగిసిన వస్తువులు',
+    criticalBatches: 'క్రిటికల్ బ్యాచ్‌లు',
+    activeInventory: 'సక్రియ ఇన్వెంటరీ',
+    batchExpired: 'బ్యాచ్ గడువు ముగిసింది',
+    batchesCritical: 'బ్యాచ్ 15 రోజుల్లో గడువు ముగుస్తోంది',
+    activeBatchCount: 'సక్రియ బ్యాచ్‌లు',
+    atRiskValue: 'ప్రమాదంలో',
+    batch: 'బ్యాచ్',
+    qty: 'పరిమాణం',
+    expiredDaysAgo: 'రోజుల క్రితం',
+    expiresIn: 'గడువు',
+    loss: 'నష్టం',
+    value: 'విలువ',
+    product: 'ఉత్పత్తి',
+    removeBtn: 'తొలగించు',
+    sellBtn: 'అమ్మండి',
+    noBatchesFound: 'బ్యాచ్‌లు కనుగొనబడలేదు',
+    allBatchesCritical: 'అన్ని బ్యాచ్‌లు గడువు ముగిసినవి లేదా క్రిటికల్',
+    removeExpiredTip: 'ఇన్వెంటరీ శుభ్రంగా ఉంచడానికి గడువు ముగిసిన వస్తువులను తొలగించండి',
+    searchProduct: 'ఉత్పత్తి వెతకండి...',
+    expiredBadge: 'గడువు ముగిసింది',
+    removeNow: 'ఇప్పుడు తొలగించు',
+    expiringSoon: 'త్వరలో గడువు',
+    returnNow: 'ఇప్పుడు రిటర్న్',
+    alertSoon: 'త్వరలో అలర్ట్',
+    safeBadge: 'సురక్షితం',
+    appNameHindi: '',
+    language: 'భాష',
+    activeSeller: 'చురుకైన విక్రేత',
+    changeLanguage: 'భాషను మార్చండి',
+    chooseAppLanguage: 'యాప్ కోసం మీకు ఇష్టమైన భాషను ఎంచుకోండి',
+    alwaysIncludeCountry: 'ఎల్లప్పుడూ దేశ కోడ్ చేర్చండి (ఉదా. +91)',
+    createAccount: 'ఖాతా సృష్టించండి',
+    setupShopMinutes: 'నిమిషాలలో మీ షాప్ సెటప్ చేయండి',
+    whatsappAlertsExpiring: 'గడువు ముగుస్తున్న స్టాక్ కోసం WhatsApp అలర్ట్‌లు',
+    scanBarcodeInvoice: 'బార్‌కోడ్ స్కాన్ లేదా ఇన్వాయిస్ ఫోటో',
+    trackLossRecover: 'నష్టాలను ట్రాక్ చేసి రిటర్న్‌లు తిరిగి పొందండి',
+    builtForShops: 'కిరాణా & మెడికల్ షాపులకు',
+    shopNameLabel: 'షాపు పేరు',
+    whatsappNumberLabel: 'WhatsApp నంబర్',
+    includeCountryCode: 'దేశ కోడ్ చేర్చండి (+91)',
+    passwordLabel: 'పాస్‌వర్డ్',
+    confirmLabel: 'నిర్ధారించు',
+    creatingAccount: 'ఖాతా సృష్టిస్తోంది...',
+    accountCreated: 'ఖాతా సృష్టించబడింది!',
+    redirecting: 'డాష్‌బోర్డ్‌కి వెళ్తోంది...',
+    checkEmailConfirmation: 'రీడైరెక్ట్ కాకపोత్ ఇమెయిల్ చూడండి.',
+    goToLogin: 'లాగిన్‌కి వెళ్ళండి',
+    alreadyHaveAccount: 'ఇప్పటికే ఖాతా ఉందా?',
+    restockItems: 'రీస్టాక్ ఐటమ్స్',
+    restockNotify: 'పంపిణీదారుకు తెలియజేయండి',
+    restockSending: 'నోటిఫికేషన్ పంపుతోంది...',
+    restockSent: 'పంపిణీదారుకు నోటిఫికేషన్ పంపబడింది!',
+    restockFailed: 'నోటిఫికేషన్ పంపడం విఫలమైంది',
+    restockVoice: 'వాయిస్ రీస్టాక్',
+    restockVoicePlaceholder: 'చెప్పండి: "20 బియ్యం ప్యాకెట్లు రీస్టాక్"',
+    restockListening: 'వింటోంది...',
+    restockStopListening: 'వినడం ఆపండి',
+    minStock: 'కనిష్ట',
   },
 
   hi: {
@@ -439,6 +638,72 @@ export const translations: Record<LanguageCode, TranslationKeys> = {
     alertsOnPhone: 'फ़ोन पर अलर्ट',
     sendSummaryDesc: 'WhatsApp पर पूर्ण दैनिक सारांश प्राप्त करें',
     generating: 'तैयार हो रहा है...',
+
+    expiredItems: 'एक्सपायर्ड सामान',
+    criticalBatches: 'गंभीर बैच',
+    activeInventory: 'सक्रिय इन्वेंटरी',
+    batchExpired: 'बैच एक्सपायर्ड',
+    batchesCritical: 'बैच 15 दिनों में एक्सपायर हो रहे हैं',
+    activeBatchCount: 'सक्रिय बैच',
+    atRiskValue: 'जोखिम में',
+
+    batch: 'बैच',
+    qty: 'मात्रा',
+    expiredDaysAgo: 'दिन पहले',
+    expiresIn: 'एक्सपायरी',
+    loss: 'नुकसान',
+    value: 'मूल्य',
+    product: 'उत्पाद',
+    removeBtn: 'हटाएं',
+    sellBtn: 'बेचें',
+    noBatchesFound: 'कोई बैच नहीं मिला',
+    allBatchesCritical: 'सभी बैच या तो एक्सपायर्ड हैं या गंभीर हैं',
+    removeExpiredTip: 'इन्वेंटरी साफ रखने के लिए सभी एक्सपायर्ड सामान हटाएं',
+    searchProduct: 'उत्पाद खोजें...',
+
+    expiredBadge: 'एक्सपायर्ड',
+    removeNow: 'अभी हटाएं',
+    expiringSoon: 'जल्द एक्सपायर',
+    returnNow: 'अभी वापस करें',
+    alertSoon: 'जल्द अलर्ट',
+    safeBadge: 'सुरक्षित',
+
+    appNameHindi: 'स्टॉक गार्ड',
+    language: 'भाषा',
+    activeSeller: 'सक्रिय विक्रेता',
+
+    changeLanguage: 'भाषा बदलें',
+    chooseAppLanguage: 'ऐप के लिए अपनी पसंदीदा भाषा चुनें',
+    alwaysIncludeCountry: 'हमेशा देश कोड शामिल करें (जैसे +91)। संदेश यहां भेजे जाएंगे।',
+
+    createAccount: 'खाता बनाएं',
+    setupShopMinutes: 'मिनटों में अपनी दुकान शुरू करें',
+    whatsappAlertsExpiring: 'एक्सपायरी स्टॉक के लिए WhatsApp अलर्ट',
+    scanBarcodeInvoice: 'बारकोड स्कैन या इनवॉइस फोटो',
+    trackLossRecover: 'नुकसान ट्रैक करें और रिटर्न वापस पाएं',
+    builtForShops: 'किराना और मेडिकल दुकानों के लिए',
+    shopNameLabel: 'दुकान का नाम',
+    whatsappNumberLabel: 'WhatsApp नंबर',
+    includeCountryCode: 'देश कोड शामिल करें (+91)',
+    passwordLabel: 'पासवर्ड',
+    confirmLabel: 'पुष्टि',
+    creatingAccount: 'खाता बन रहा है...',
+    accountCreated: 'खाता बन गया!',
+    redirecting: 'डैशबोर्ड पर जा रहे हैं...',
+    checkEmailConfirmation: 'अगर रीडायरेक्ट नहीं हो, तो ईमेल जांचें।',
+    goToLogin: 'लॉगिन पर जाएं',
+    alreadyHaveAccount: 'पहले से खाता है?',
+
+    restockItems: 'रीस्टॉक आइटम',
+    restockNotify: 'वितरक को सूचित करें',
+    restockSending: 'सूचना भेजी जा रही है...',
+    restockSent: 'वितरक को सूचना भेज दी गई!',
+    restockFailed: 'सूचना भेजने में विफल',
+    restockVoice: 'वॉइस रीस्टॉक',
+    restockVoicePlaceholder: 'बोलें: "20 चावल पैकेट रीस्टॉक करें"',
+    restockListening: 'सुन रहा है...',
+    restockStopListening: 'सुनना बंद करें',
+    minStock: 'न्यूनतम',
   },
 
   mr: {
@@ -537,6 +802,66 @@ export const translations: Record<LanguageCode, TranslationKeys> = {
     alertsOnPhone: 'फोनवर अलर्ट',
     sendSummaryDesc: 'WhatsApp वर पूर्ण दैनिक सारांश मिळवा',
     generating: 'तयार होत आहे...',
+
+    expiredItems: 'कालबाह्य वस्तू',
+    criticalBatches: 'गंभीर बॅच',
+    activeInventory: 'सक्रिय इन्व्हेंटरी',
+    batchExpired: 'बॅच कालबाह्य',
+    batchesCritical: 'बॅच 15 दिवसांत कालबाह्य होत आहेत',
+    activeBatchCount: 'सक्रिय बॅच',
+    atRiskValue: 'धोक्यात',
+    batch: 'बॅच',
+    qty: 'प्रमाण',
+    expiredDaysAgo: 'दिवसांपूर्वी',
+    expiresIn: 'कालबाह्य होत आहे',
+    loss: 'नुकसान',
+    value: 'किंमत',
+    product: 'उत्पादन',
+    removeBtn: 'हटवा',
+    sellBtn: 'विक्री करा',
+    noBatchesFound: 'बॅच सापडले नाहीत',
+    allBatchesCritical: 'सर्व बॅच कालबाह्य किंवा गंभीर आहेत',
+    removeExpiredTip: 'इन्व्हेंटरी स्वच्छ ठेवण्यासाठी कालबाह्य वस्तू हटवा',
+    searchProduct: 'उत्पादन शोधा...',
+    expiredBadge: 'कालबाह्य',
+    removeNow: 'आता हटवा',
+    expiringSoon: 'लवकरच कालबाह्य',
+    returnNow: 'आता परत करा',
+    alertSoon: 'लवकरच इशारा',
+    safeBadge: 'सुरक्षित',
+    appNameHindi: '',
+    language: 'भाषा',
+    activeSeller: 'सक्रिय विक्रेता',
+    changeLanguage: 'भाषा बदला',
+    chooseAppLanguage: 'अॅपसाठी आपली पसंतीची भाषा निवडा',
+    alwaysIncludeCountry: 'नेहमी देश कोड समाविष्ट करा (उदा. +91)',
+    createAccount: 'खाते तयार करा',
+    setupShopMinutes: 'मिनिटांत आपले दुकान सुरू करा',
+    whatsappAlertsExpiring: 'कालबाह्य स्टॉकसाठी WhatsApp अलर्ट',
+    scanBarcodeInvoice: 'बारकोड स्कॅन किंवा इनव्हॉइस फोटो',
+    trackLossRecover: 'नुकसान ट्रॅक करा आणि रिटर्न्स मिळवा',
+    builtForShops: 'किराणा आणि मेडिकल दुकानांसाठी',
+    shopNameLabel: 'दुकानाचे नाव',
+    whatsappNumberLabel: 'WhatsApp नंबर',
+    includeCountryCode: 'देश कोड समाविष्ट करा (+91)',
+    passwordLabel: 'पासवर्ड',
+    confirmLabel: 'पुष्टी',
+    creatingAccount: 'खाते तयार होत आहे...',
+    accountCreated: 'खाते तयार झाले!',
+    redirecting: 'डॅशबोर्डवर जात आहे...',
+    checkEmailConfirmation: 'रिडायरेक्ट न झाल्यास ईमेल तपासा.',
+    goToLogin: 'लॉगिनवर जा',
+    alreadyHaveAccount: 'आधीच खाते आहे?',
+    restockItems: 'रीस्टॉक आयटम',
+    restockNotify: 'वितरकाला कळवा',
+    restockSending: 'सूचना पाठवत आहे...',
+    restockSent: 'वितरकाला सूचना पाठवली!',
+    restockFailed: 'सूचना पाठवणे अयशस्वी',
+    restockVoice: 'व्हॉइस रीस्टॉक',
+    restockVoicePlaceholder: 'बोला: "20 तांदूळ पॅकेट रीस्टॉक"',
+    restockListening: 'ऐकत आहे...',
+    restockStopListening: 'ऐकणे थांबवा',
+    minStock: 'किमान',
   },
 
   ta: {
@@ -635,6 +960,66 @@ export const translations: Record<LanguageCode, TranslationKeys> = {
     alertsOnPhone: 'தொலைபேசியில் எச்சரிக்கைகள்',
     sendSummaryDesc: 'WhatsApp இல் முழுமையான தினசரி சுருக்கம் பெறுங்கள்',
     generating: 'உருவாக்குகிறது...',
+
+    expiredItems: 'காலாவதியான பொருட்கள்',
+    criticalBatches: 'ஆபத்தான தொகுப்புகள்',
+    activeInventory: 'செயலில் உள்ள சரக்கு',
+    batchExpired: 'தொகுப்பு காலாவதி',
+    batchesCritical: 'தொகுப்பு 15 நாட்களில் காலாவதியாகும்',
+    activeBatchCount: 'செயலில் உள்ள தொகுப்புகள்',
+    atRiskValue: 'ஆபத்தில்',
+    batch: 'தொகுப்பு',
+    qty: 'அளவு',
+    expiredDaysAgo: 'நாட்களுக்கு முன்',
+    expiresIn: 'காலாவதி',
+    loss: 'இழப்பு',
+    value: 'மதிப்பு',
+    product: 'பொருள்',
+    removeBtn: 'அகற்று',
+    sellBtn: 'விற்கவும்',
+    noBatchesFound: 'தொகுப்புகள் கிடைக்கவில்லை',
+    allBatchesCritical: 'அனைத்து தொகுப்புகளும் காலாவதி அல்லது ஆபத்தான',
+    removeExpiredTip: 'சரக்கு சுத்தமாக வைக்க காலாவதி பொருட்களை அகற்றுங்கள்',
+    searchProduct: 'பொருளைத் தேடு...',
+    expiredBadge: 'காலாவதி',
+    removeNow: 'இப்போது அகற்று',
+    expiringSoon: 'விரைவில் காலாவதி',
+    returnNow: 'இப்போது திருப்பு',
+    alertSoon: 'விரைவில் எச்சரிக்கை',
+    safeBadge: 'பாதுகாப்பான',
+    appNameHindi: '',
+    language: 'மொழி',
+    activeSeller: 'செயலில் உள்ள விற்பனையாளர்',
+    changeLanguage: 'மொழியை மாற்றவும்',
+    chooseAppLanguage: 'ஆப்பிற்கான உங்கள் விருப்பமான மொழியைத் தேர்ந்தெடுக்கவும்',
+    alwaysIncludeCountry: 'எப்போதும் நாட்டு குறியீட்டை சேர்க்கவும் (உதா. +91)',
+    createAccount: 'கணக்கை உருவாக்கவும்',
+    setupShopMinutes: 'நிமிடங்களில் கடையை அமைக்கவும்',
+    whatsappAlertsExpiring: 'காலாவதியாகும் பொருட்களுக்கு WhatsApp எச்சரிக்கைகள்',
+    scanBarcodeInvoice: 'பார்கோடு ஸ்கேன் அல்லது விலைப்பட்டியல் புகைப்படம்',
+    trackLossRecover: 'இழப்புகளை கண்காணிக்கவும் திருப்புகளைப் பெறவும்',
+    builtForShops: 'மளிகை & மருத்துவ கடைகளுக்காக',
+    shopNameLabel: 'கடையின் பெயர்',
+    whatsappNumberLabel: 'WhatsApp எண்',
+    includeCountryCode: 'நாட்டு குறியீடு சேர்க்கவும் (+91)',
+    passwordLabel: 'கடவுச்சொல்',
+    confirmLabel: 'உறுதிப்படுத்து',
+    creatingAccount: 'கணக்கு உருவாக்குகிறது...',
+    accountCreated: 'கணக்கு உருவாக்கப்பட்டது!',
+    redirecting: 'டாஷ்போர்டுக்கு செல்கிறது...',
+    checkEmailConfirmation: 'திருப்பி விடவில்லையெனில் மின்னஞ்சலைச் சரிபார்க்கவும்.',
+    goToLogin: 'உள்நுழைவுக்கு செல்லவும்',
+    alreadyHaveAccount: 'ஏற்கனவே கணக்கு உள்ளதா?',
+    restockItems: 'மீள்நிரப்பு பொருட்கள்',
+    restockNotify: 'விநியோகஸ்தருக்கு தெரிவிக்கவும்',
+    restockSending: 'அறிவிப்பு அனுப்புகிறது...',
+    restockSent: 'விநியோகஸ்தருக்கு அறிவிப்பு அனுப்பப்பட்டது!',
+    restockFailed: 'அறிவிப்பு அனுப்புவது தோல்வியடைந்தது',
+    restockVoice: 'குரல் மீள்நிரப்பு',
+    restockVoicePlaceholder: 'சொல்லுங்கள்: "20 அரிசி பாக்கெட் மீள்நிரப்பு"',
+    restockListening: 'கேட்கிறது...',
+    restockStopListening: 'கேட்பதை நிறுத்து',
+    minStock: 'குறைந்தபட்சம்',
   },
 
   kn: {
@@ -733,5 +1118,65 @@ export const translations: Record<LanguageCode, TranslationKeys> = {
     alertsOnPhone: 'ಫೋನ್‌ನಲ್ಲಿ ಎಚ್ಚರಿಕೆಗಳು',
     sendSummaryDesc: 'WhatsApp ನಲ್ಲಿ ಸಂಪೂರ್ಣ ದೈನಂದಿನ ಸಾರಾಂಶ ಪಡೆಯಿರಿ',
     generating: 'ಉತ್ಪಾದಿಸುತ್ತಿದೆ...',
+
+    expiredItems: 'ಅವಧಿ ಮುಗಿದ ವಸ್ತುಗಳು',
+    criticalBatches: 'ಗಂಭೀರ ಬ್ಯಾಚ್‌ಗಳು',
+    activeInventory: 'ಸಕ್ರಿಯ ದಾಸ್ತಾನು',
+    batchExpired: 'ಬ್ಯಾಚ್ ಅವಧಿ ಮುಗಿದಿದೆ',
+    batchesCritical: 'ಬ್ಯಾಚ್ 15 ದಿನಗಳಲ್ಲಿ ಅವಧಿ ಮುಗಿಯುತ್ತಿದೆ',
+    activeBatchCount: 'ಸಕ್ರಿಯ ಬ್ಯಾಚ್‌ಗಳು',
+    atRiskValue: 'ಅಪಾಯದಲ್ಲಿ',
+    batch: 'ಬ್ಯಾಚ್',
+    qty: 'ಪ್ರಮಾಣ',
+    expiredDaysAgo: 'ದಿನಗಳ ಹಿಂದೆ',
+    expiresIn: 'ಅವಧಿ',
+    loss: 'ನಷ್ಟ',
+    value: 'ಮೌಲ್ಯ',
+    product: 'ಉತ್ಪನ್ನ',
+    removeBtn: 'ತೆಗೆಯಿರಿ',
+    sellBtn: 'ಮಾರಾಟ',
+    noBatchesFound: 'ಬ್ಯಾಚ್‌ಗಳು ಕಂಡುಬಂದಿಲ್ಲ',
+    allBatchesCritical: 'ಎಲ್ಲಾ ಬ್ಯಾಚ್‌ಗಳು ಅವಧಿ ಮುಗಿದಿವೆ ಅಥವಾ ಗಂಭೀರ',
+    removeExpiredTip: 'ದಾಸ್ತಾನು ಶುಚಿಯಾಗಿಡಲು ಅವಧಿ ಮುಗಿದ ವಸ್ತುಗಳನ್ನು ತೆಗೆಯಿರಿ',
+    searchProduct: 'ಉತ್ಪನ್ನ ಹುಡುಕಿ...',
+    expiredBadge: 'ಅವಧಿ ಮುಗಿದಿದೆ',
+    removeNow: 'ಈಗ ತೆಗೆಯಿರಿ',
+    expiringSoon: 'ಶೀಘ್ರದಲ್ಲೇ ಅವಧಿ',
+    returnNow: 'ಈಗ ಹಿಂತಿರುಗಿಸಿ',
+    alertSoon: 'ಶೀಘ್ರದಲ್ಲೇ ಎಚ್ಚರಿಕೆ',
+    safeBadge: 'ಸುರಕ್ಷಿತ',
+    appNameHindi: '',
+    language: 'ಭಾಷೆ',
+    activeSeller: 'ಸಕ್ರಿಯ ಮಾರಾಟಗಾರ',
+    changeLanguage: 'ಭಾಷೆ ಬದಲಾಯಿಸಿ',
+    chooseAppLanguage: 'ಅಪ್ಲಿಕೇಶನ್‌ಗಾಗಿ ನಿಮ್ಮ ಆದ್ಯತೆಯ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ',
+    alwaysIncludeCountry: 'ಯಾವಾಗಲೂ ದೇಶ ಕೋಡ್ ಸೇರಿಸಿ (ಉದಾ. +91)',
+    createAccount: 'ಖಾತೆ ರಚಿಸಿ',
+    setupShopMinutes: 'ನಿಮಿಷಗಳಲ್ಲಿ ಅಂಗಡಿ ಸ್ಥಾಪಿಸಿ',
+    whatsappAlertsExpiring: 'ಅವಧಿ ಮುಗಿಯುತ್ತಿರುವ ಸ್ಟಾಕ್‌ಗೆ WhatsApp ಎಚ್ಚರಿಕೆಗಳು',
+    scanBarcodeInvoice: 'ಬಾರ್‌ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಅಥವಾ ಇನ್ವಾಯ್ಸ್ ಫೋಟೋ',
+    trackLossRecover: 'ನಷ್ಟಗಳನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಿ ಮತ್ತು ಹಿಂತಿರುಗಿಕೆ ಪಡೆಯಿರಿ',
+    builtForShops: 'ಕಿರಾಣಿ & ಮೆಡಿಕಲ್ ಅಂಗಡಿಗಳಿಗಾಗಿ',
+    shopNameLabel: 'ಅಂಗಡಿ ಹೆಸರು',
+    whatsappNumberLabel: 'WhatsApp ಸಂಖ್ಯೆ',
+    includeCountryCode: 'ದೇಶ ಕೋಡ್ ಸೇರಿಸಿ (+91)',
+    passwordLabel: 'ಪಾಸ್‌ವರ್ಡ್',
+    confirmLabel: 'ದೃಢೀಕರಿಸಿ',
+    creatingAccount: 'ಖಾತೆ ರಚಿಸುತ್ತಿದೆ...',
+    accountCreated: 'ಖಾತೆ ರಚಿಸಲಾಗಿದೆ!',
+    redirecting: 'ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಹೋಗುತ್ತಿದೆ...',
+    checkEmailConfirmation: 'ಮರುನಿರ್ದೇಶಿಸದಿದ್ದರೆ ಇ-ಮೇಲ್ ಪರಿಶೀಲಿಸಿ.',
+    goToLogin: 'ಲಾಗಿನ್‌ಗೆ ಹೋಗಿ',
+    alreadyHaveAccount: 'ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ?',
+    restockItems: 'ಮರುಸ್ಟಾಕ್ ವಸ್ತುಗಳು',
+    restockNotify: 'ವಿತರಕರಿಗೆ ತಿಳಿಸಿ',
+    restockSending: 'ಅಧಿಸೂಚನೆ ಕಳುಹಿಸುತ್ತಿದೆ...',
+    restockSent: 'ವಿತರಕರಿಗೆ ಅಧಿಸೂಚನೆ ಕಳುಹಿಸಲಾಗಿದೆ!',
+    restockFailed: 'ಅಧಿಸೂಚನೆ ಕಳುಹಿಸುವಲ್ಲಿ ವಿಫಲ',
+    restockVoice: 'ಧ್ವನಿ ಮರುಸ್ಟಾಕ್',
+    restockVoicePlaceholder: 'ಹೇಳಿ: "20 ಅಕ್ಕಿ ಪ್ಯಾಕೆಟ್ ಮರುಸ್ಟಾಕ್"',
+    restockListening: 'ಕೇಳುತ್ತಿದೆ...',
+    restockStopListening: 'ಕೇಳುವುದನ್ನು ನಿಲ್ಲಿಸಿ',
+    minStock: 'ಕನಿಷ್ಠ',
   },
 }
