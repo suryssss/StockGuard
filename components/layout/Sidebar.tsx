@@ -47,7 +47,7 @@ export default function Sidebar() {
         </div>
         <div>
           <span className="text-lg font-bold tracking-tight text-white block leading-tight">StockGuard</span>
-          <span className="text-[10px] text-slate-400 font-medium tracking-wide">{t.appName !== 'StockGuard' ? t.appName : 'Inventory Guard'}</span>
+          <span className="text-[10px] text-slate-400 font-medium tracking-wide">{t.appNameHindi || t.appName}</span>
         </div>
       </div>
 
@@ -88,7 +88,7 @@ export default function Sidebar() {
 
       {/* Language Switcher */}
       <div className="px-3 pb-2">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 px-3 mb-2">🌐 Language</p>
+        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 px-3 mb-2">🌐 {t.language}</p>
         <LanguageSwitcher />
       </div>
 
@@ -106,7 +106,7 @@ export default function Sidebar() {
                 {profile?.shop_name || profile?.full_name || t.shopInfo}
               </p>
               <p className="text-[10px] text-slate-500 font-medium truncate mt-0.5 opacity-80">
-                {profile?.business_category || 'Active Seller'}
+                {profile?.business_category || t.activeSeller}
               </p>
             </div>
           </div>

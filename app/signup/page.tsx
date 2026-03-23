@@ -4,10 +4,12 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createSupabaseBrowserClient } from '@/lib/supabase-browser'
 import { Mail, Lock, Store, Phone, Loader2, AlertCircle, CheckCircle2, ArrowRight } from 'lucide-react'
+import { useLanguage } from '@/lib/LanguageContext'
 import Link from 'next/link'
 
 export default function SignupPage() {
   const router = useRouter()
+  const { t } = useLanguage()
   const [form, setForm] = useState({
     shopName: '',
     email: '',
@@ -105,19 +107,19 @@ export default function SignupPage() {
             <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center mb-6 shadow-lg shadow-emerald-200">
               <CheckCircle2 className="w-10 h-10 text-white" />
             </div>
-            <h2 className="text-2xl font-extrabold text-gray-900 mb-2">Account Created! 🎉</h2>
-            <p className="text-sm text-gray-400 mb-1">Account created!</p>
+            <h2 className="text-2xl font-extrabold text-gray-900 mb-2">{t.accountCreated} 🎉</h2>
+            <p className="text-sm text-gray-400 mb-1">{t.redirecting}</p>
             <p className="text-gray-500 text-sm mt-4">
-              Redirecting to dashboard...
+              {t.redirecting}
             </p>
             <p className="text-gray-400 text-xs mt-1">
-              If not redirected, check your email for confirmation.
+              {t.checkEmailConfirmation}
             </p>
             <Link
               href="/login"
               className="inline-block mt-6 text-orange-600 hover:text-orange-700 text-sm font-bold transition-colors"
             >
-              Go to Login →
+              {t.goToLogin} →
             </Link>
           </div>
         </div>
@@ -142,32 +144,29 @@ export default function SignupPage() {
             <h1 className="text-5xl font-extrabold text-white leading-tight tracking-tight">
               Join StockGuard
             </h1>
-            <p className="text-xl text-emerald-100 mt-2 font-medium">Start managing your stock today.</p>
+            <p className="text-xl text-emerald-100 mt-2 font-medium">{t.appNameHindi || t.appName}</p>
           </div>
           
           <p className="text-lg text-white/90 leading-relaxed max-w-md">
-            Set up your shop inventory management in just 5 minutes. No app install needed.
-          </p>
-          <p className="text-sm text-white/60 mt-2">
-
+            {t.appTagline}
           </p>
 
           <div className="mt-12 space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center text-sm">📱</div>
-              <p className="text-white/90 text-sm">WhatsApp alerts for expiring stock</p>
+              <p className="text-white/90 text-sm">{t.whatsappAlertsExpiring}</p>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center text-sm">📷</div>
-              <p className="text-white/90 text-sm">Scan barcode or photograph invoice</p>
+              <p className="text-white/90 text-sm">{t.scanBarcodeInvoice}</p>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center text-sm">💰</div>
-              <p className="text-white/90 text-sm">Track ₹ losses and recover returns</p>
+              <p className="text-white/90 text-sm">{t.trackLossRecover}</p>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center text-sm">🏪</div>
-              <p className="text-white/90 text-sm">Built for kirana & medical shops</p>
+              <p className="text-white/90 text-sm">{t.builtForShops}</p>
             </div>
           </div>
         </div>
@@ -182,12 +181,12 @@ export default function SignupPage() {
               <ShieldIcon className="w-7 h-7 text-white" />
             </div>
             <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">StockGuard</h1>
-            <p className="text-xs text-gray-400 mt-0.5">Inventory Guard</p>
+            <p className="text-xs text-gray-400 mt-0.5">{t.appNameHindi || t.appName}</p>
           </div>
 
           <div className="bg-white rounded-2xl border border-gray-200/60 p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-gray-900 mb-1">Create Account</h2>
-            <p className="text-gray-400 text-sm mb-6">Set up your shop in minutes</p>
+            <h2 className="text-xl font-bold text-gray-900 mb-1">{t.createAccount}</h2>
+            <p className="text-gray-400 text-sm mb-6">{t.setupShopMinutes}</p>
 
             {error && (
               <div className="bg-red-50 border border-red-200/60 rounded-xl px-4 py-3 mb-5 flex items-start gap-3">
@@ -198,7 +197,7 @@ export default function SignupPage() {
 
             <form onSubmit={handleSignup} className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Shop Name</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.shopNameLabel}</label>
                 <div className="relative">
                   <Store className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
@@ -213,7 +212,7 @@ export default function SignupPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.email}</label>
                 <div className="relative">
                   <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
@@ -229,7 +228,7 @@ export default function SignupPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">WhatsApp Number</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.whatsappNumberLabel}</label>
                 <div className="relative">
                   <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
@@ -241,12 +240,12 @@ export default function SignupPage() {
                     disabled={loading}
                   />
                 </div>
-                <p className="text-[10px] text-gray-400 mt-1">Include country code (+91)</p>
+                <p className="text-[10px] text-gray-400 mt-1">{t.includeCountryCode}</p>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Password</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.passwordLabel}</label>
                   <div className="relative">
                     <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
@@ -261,7 +260,7 @@ export default function SignupPage() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Confirm Password</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">{t.confirmLabel}</label>
                   <div className="relative">
                     <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
@@ -285,11 +284,11 @@ export default function SignupPage() {
                 {loading ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    Creating account...
+                    {t.creatingAccount}
                   </>
                 ) : (
                   <>
-                    Create Account
+                    {t.createAccount}
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
@@ -298,7 +297,7 @@ export default function SignupPage() {
 
             <div className="mt-6 pt-5 border-t border-gray-100 text-center">
               <p className="text-gray-500 text-sm">
-                Already have an account?{' '}
+                {t.alreadyHaveAccount}{' '}
                 <Link href="/login" className="text-orange-600 hover:text-orange-700 font-semibold transition-colors">
                   Sign in
                 </Link>
