@@ -5,7 +5,7 @@ export default function ExpiryBadge({ days }: Props) {
     return (
       <span className="inline-flex items-center gap-1.5 bg-red-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm animate-pulse">
         <span className="w-1.5 h-1.5 bg-white rounded-full" />
-        EXPIRED / एक्सपायर्ड
+        EXPIRED
       </span>
     )
   }
@@ -48,7 +48,7 @@ export default function ExpiryBadge({ days }: Props) {
   return (
     <span className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-full">
       <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-      SAFE / सुरक्षित
+      SAFE
     </span>
   )
 }

@@ -28,17 +28,17 @@ export default function SignupPage() {
     e.preventDefault()
 
     if (!form.shopName.trim() || !form.email.trim() || !form.password || !form.phoneNumber.trim()) {
-      setError('All fields are required / सभी फ़ील्ड ज़रूरी हैं')
+      setError('All fields are required')
       return
     }
 
     if (form.password.length < 6) {
-      setError('Password must be at least 6 characters / पासवर्ड कम से कम 6 अक्षर का होना चाहिए')
+      setError('Password must be at least 6 characters')
       return
     }
 
     if (form.password !== form.confirmPassword) {
-      setError('Passwords do not match / पासवर्ड मेल नहीं खाते')
+      setError('Passwords do not match')
       return
     }
 
@@ -106,7 +106,7 @@ export default function SignupPage() {
               <CheckCircle2 className="w-10 h-10 text-white" />
             </div>
             <h2 className="text-2xl font-extrabold text-gray-900 mb-2">Account Created! 🎉</h2>
-            <p className="text-sm text-gray-400 mb-1">खाता बन गया!</p>
+            <p className="text-sm text-gray-400 mb-1">Account created!</p>
             <p className="text-gray-500 text-sm mt-4">
               Redirecting to dashboard...
             </p>
@@ -117,7 +117,7 @@ export default function SignupPage() {
               href="/login"
               className="inline-block mt-6 text-orange-600 hover:text-orange-700 text-sm font-bold transition-colors"
             >
-              Go to Login / लॉगिन पर जाएं →
+              Go to Login →
             </Link>
           </div>
         </div>
@@ -142,14 +142,14 @@ export default function SignupPage() {
             <h1 className="text-5xl font-extrabold text-white leading-tight tracking-tight">
               Join StockGuard
             </h1>
-            <p className="text-xl text-emerald-100 mt-2 font-medium">स्टॉक गार्ड से जुड़ें</p>
+            <p className="text-xl text-emerald-100 mt-2 font-medium">Start managing your stock today.</p>
           </div>
           
           <p className="text-lg text-white/90 leading-relaxed max-w-md">
             Set up your shop inventory management in just 5 minutes. No app install needed.
           </p>
           <p className="text-sm text-white/60 mt-2">
-            सिर्फ 5 मिनट में अपनी दुकान का स्टॉक मैनेजमेंट शुरू करें।
+
           </p>
 
           <div className="mt-12 space-y-4">
@@ -182,12 +182,12 @@ export default function SignupPage() {
               <ShieldIcon className="w-7 h-7 text-white" />
             </div>
             <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">StockGuard</h1>
-            <p className="text-xs text-gray-400 mt-0.5">स्टॉक गार्ड</p>
+            <p className="text-xs text-gray-400 mt-0.5">Inventory Guard</p>
           </div>
 
           <div className="bg-white rounded-2xl border border-gray-200/60 p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-gray-900 mb-1">Create Account / खाता बनाएं</h2>
-            <p className="text-gray-400 text-sm mb-6">Set up your shop in minutes / मिनटों में शुरू करें</p>
+            <h2 className="text-xl font-bold text-gray-900 mb-1">Create Account</h2>
+            <p className="text-gray-400 text-sm mb-6">Set up your shop in minutes</p>
 
             {error && (
               <div className="bg-red-50 border border-red-200/60 rounded-xl px-4 py-3 mb-5 flex items-start gap-3">
@@ -198,7 +198,7 @@ export default function SignupPage() {
 
             <form onSubmit={handleSignup} className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Shop Name / दुकान का नाम</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Shop Name</label>
                 <div className="relative">
                   <Store className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
@@ -213,7 +213,7 @@ export default function SignupPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email / ईमेल</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">Email</label>
                 <div className="relative">
                   <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
@@ -229,7 +229,7 @@ export default function SignupPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1.5">WhatsApp Number / व्हाट्सएप नंबर</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-1.5">WhatsApp Number</label>
                 <div className="relative">
                   <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input
@@ -241,12 +241,12 @@ export default function SignupPage() {
                     disabled={loading}
                   />
                 </div>
-                <p className="text-[10px] text-gray-400 mt-1">Include country code / देश कोड लगाएं (+91)</p>
+                <p className="text-[10px] text-gray-400 mt-1">Include country code (+91)</p>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Password / पासवर्ड</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Password</label>
                   <div className="relative">
                     <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
@@ -261,7 +261,7 @@ export default function SignupPage() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Confirm / पुष्टि</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">Confirm Password</label>
                   <div className="relative">
                     <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
@@ -289,7 +289,7 @@ export default function SignupPage() {
                   </>
                 ) : (
                   <>
-                    Create Account / खाता बनाएं
+                    Create Account
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
@@ -298,7 +298,7 @@ export default function SignupPage() {
 
             <div className="mt-6 pt-5 border-t border-gray-100 text-center">
               <p className="text-gray-500 text-sm">
-                Already have an account? / पहले से खाता है?{' '}
+                Already have an account?{' '}
                 <Link href="/login" className="text-orange-600 hover:text-orange-700 font-semibold transition-colors">
                   Sign in
                 </Link>

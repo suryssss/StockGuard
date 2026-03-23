@@ -86,7 +86,7 @@ export default function SettingsPage() {
               <Globe className="w-5 h-5 text-orange-600" />
             </div>
             <div className="flex-1">
-              <h2 className="text-lg font-semibold text-gray-900">Language / भाषा</h2>
+              <h2 className="text-lg font-semibold text-gray-900">Language</h2>
               <p className="text-sm text-gray-500">Choose your preferred app language</p>
             </div>
           </div>

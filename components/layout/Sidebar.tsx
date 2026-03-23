@@ -45,7 +45,7 @@ export default function Sidebar() {
         </div>
         <div>
           <span className="text-lg font-bold tracking-tight text-white block leading-tight">StockGuard</span>
-          <span className="text-[10px] text-slate-400 font-medium tracking-wide">{t.appName !== 'StockGuard' ? t.appName : 'स्टॉक गार्ड'}</span>
+          <span className="text-[10px] text-slate-400 font-medium tracking-wide">{t.appName !== 'StockGuard' ? t.appName : 'Inventory Guard'}</span>
         </div>
       </div>
 

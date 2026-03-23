@@ -70,7 +70,7 @@ export default function BatchTable({ batches, shopId }: Props) {
         <div className="bg-gradient-to-r from-red-50 to-orange-50 border border-red-200/60 rounded-2xl p-4 animate-fade-in-up">
           <div className="flex items-center gap-2 mb-3">
             <span className="text-lg">⚠️</span>
-            <h3 className="font-bold text-red-800 text-sm">Critical Batches / गंभीर बैच</h3>
+            <h3 className="font-bold text-red-800 text-sm">Critical Batches</h3>
             <span className="ml-auto text-xs font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded-full">{criticalBatches.length}</span>
           </div>
           <div className="space-y-2">
@@ -132,14 +132,14 @@ export default function BatchTable({ batches, shopId }: Props) {
       <div className="bg-white rounded-2xl border border-gray-200/60 shadow-sm overflow-hidden">
         <div className="p-4 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center gap-3">
           <div>
-            <h2 className="text-base font-bold text-gray-900">Batch Inventory / बैच इन्वेंटरी</h2>
+            <h2 className="text-base font-bold text-gray-900">Batch Inventory</h2>
             <p className="text-xs text-gray-400">{filtered.length} items</p>
           </div>
           <div className="sm:ml-auto relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
               type="text"
-              placeholder="Search product... / खोजें..."
+              placeholder="Search product..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-9 pr-4 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-200 focus:border-orange-400 outline-none w-full sm:w-60 transition-all"
@@ -151,11 +151,11 @@ export default function BatchTable({ batches, shopId }: Props) {
           <table className="w-full text-sm text-left">
             <thead className="bg-gray-50/80 text-[11px] text-gray-500 font-semibold uppercase tracking-wider border-b border-gray-100">
               <tr>
-                <th className="px-4 py-3">Product / उत्पाद</th>
+                <th className="px-4 py-3">Product</th>
                 <th className="px-4 py-3">Batch</th>
                 <th className="px-4 py-3">Qty</th>
                 <th className="px-4 py-3">Days</th>
-                <th className="px-4 py-3">Value / मूल्य</th>
+                <th className="px-4 py-3">Value</th>
                 <th className="px-4 py-3">Status</th>
                 <th className="px-4 py-3">Action</th>
               </tr>
@@ -224,7 +224,7 @@ export default function BatchTable({ batches, shopId }: Props) {
                     <div className="flex flex-col items-center gap-2">
                       <span className="text-3xl">📦</span>
                       <p className="text-gray-500 font-medium">No batches found</p>
-                      <p className="text-gray-400 text-xs">कोई बैच नहीं मिला</p>
+                      <p className="text-gray-400 text-xs">No batches found</p>
                     </div>
                   </td>
                 </tr>

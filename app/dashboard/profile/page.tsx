@@ -156,7 +156,7 @@ export default function ProfilePage() {
               {/* Left Column: About/Bio */}
               <div className="lg:col-span-1 space-y-8">
                 <div>
-                  <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-4">About Me / परिचय</h4>
+                  <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-4">About Me</h4>
                   <div className="bg-slate-50 p-6 rounded-[24px] border border-slate-100 relative group/bio overflow-hidden">
                     <div className="absolute top-0 right-0 p-4 opacity-5">
                       <FileText className="w-12 h-12 text-slate-900" />
@@ -179,7 +179,7 @@ export default function ProfilePage() {
 
               {/* Right Column: Grid of Info */}
               <div className="lg:col-span-2">
-                <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-6">Details / विवरण</h4>
+                <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-6">Details</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <MetricCard
                     icon={<Mail className="w-5 h-5" />}

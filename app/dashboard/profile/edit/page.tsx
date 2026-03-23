@@ -58,7 +58,7 @@ export default function EditProfilePage() {
         </Link>
         <div>
           <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-slate-900 text-white text-[10px] font-black uppercase tracking-[0.2em] border border-white/10 mb-2">
-            Settings / संपादन
+            Settings
           </div>
           <h1 className="text-3xl font-black text-slate-900 tracking-tight">
             Update Profile

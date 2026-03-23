@@ -15,8 +15,8 @@ export default function DistributorScore({ distributors }: Props) {
   return (
     <div className="bg-white rounded-2xl border border-gray-200/60 shadow-sm overflow-hidden">
       <div className="p-4 border-b border-gray-100">
-        <h3 className="font-bold text-gray-900 text-sm">Distributors / वितरक</h3>
-        <p className="text-xs text-gray-400 mt-0.5">Return reliability score / वापसी विश्वसनीयता</p>
+        <h3 className="font-bold text-gray-900 text-sm">Distributors</h3>
+        <p className="text-xs text-gray-400 mt-0.5">Return reliability score</p>
       </div>
       <div className="divide-y divide-gray-50">
         {distributors.map((d) => {
@@ -82,7 +82,7 @@ export default function DistributorScore({ distributors }: Props) {
           <div className="p-8 text-center">
             <span className="text-2xl block mb-2">🤝</span>
             <p className="text-gray-500 text-sm font-medium">No distributors yet</p>
-            <p className="text-gray-400 text-xs">अभी तक कोई वितरक नहीं</p>
+            <p className="text-gray-400 text-xs">No distributors added yet</p>
           </div>
         )}
       </div>
