@@ -8,10 +8,12 @@ import { createSupabaseBrowserClient } from '@/lib/supabase-browser'
 import { useLanguage } from '@/lib/LanguageContext'
 import LanguageSwitcher from '@/components/dashboard/LanguageSwitcher'
 import LanguageModal from '@/components/dashboard/LanguageModal'
+import { useProfile } from '@/lib/hooks/useProfile'
 
 export default function Sidebar() {
   const pathname = usePathname()
   const { t } = useLanguage()
+  const { profile } = useProfile()
   const [logoutLoading, setLogoutLoading] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -93,12 +95,19 @@ export default function Sidebar() {
       {/* Shop Info */}
       <div className="px-3 pb-3">
         <div className="bg-gradient-to-br from-orange-500/10 to-orange-600/5 border border-orange-500/10 rounded-xl p-3.5">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-7 h-7 rounded-lg bg-orange-500/20 flex items-center justify-center">
-              <span className="text-xs">🏪</span>
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-9 h-9 rounded-xl bg-orange-500/20 flex items-center justify-center shrink-0 border border-orange-500/20">
+              <span className="text-xs font-bold text-orange-400">
+                {profile?.shop_name?.charAt(0).toUpperCase() || profile?.full_name?.charAt(0).toUpperCase() || '🏪'}
+              </span>
             </div>
-            <div>
-              <p className="text-xs font-semibold text-white leading-tight">{t.shopInfo}</p>
+            <div className="min-w-0">
+              <p className="text-sm font-bold text-white leading-tight truncate">
+                {profile?.shop_name || profile?.full_name || t.shopInfo}
+              </p>
+              <p className="text-[10px] text-slate-500 font-medium truncate mt-0.5 opacity-80">
+                {profile?.business_category || 'Active Seller'}
+              </p>
             </div>
           </div>
           <p className="text-[10px] text-slate-500">{t.whatsappActive}</p>

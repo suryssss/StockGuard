@@ -119,6 +119,7 @@ export default async function DashboardPage() {
   let lowStockCount = 0
   let restockAlerts = 0
   let currentInventoryCount = 0
+  let expiredCount = 0
 
   const todayStart = new Date()
   todayStart.setHours(0, 0, 0, 0)
@@ -163,6 +164,9 @@ export default async function DashboardPage() {
     }
   })
 
+  // Count expired batches
+  expiredCount = batches.filter((b: any) => new Date(b.expiryDate).getTime() <= today.getTime()).length
+
   const lossData = {
     atRisk: Math.round(calcAtRisk(batches)),
     recovered: Math.round(calcRecovered(returnLogs)),
@@ -175,7 +179,8 @@ export default async function DashboardPage() {
 
   const batchesWithDays = batches.map((b: any) => ({
     ...b,
-    daysUntilExpiry: Math.ceil((new Date(b.expiryDate).getTime() - today.getTime()) / 86400000)
+    daysUntilExpiry: Math.ceil((new Date(b.expiryDate).getTime() - today.getTime()) / 86400000),
+    expiryDate: b.expiryDate,
   }))
 
   const distData = (distributors || []).map((d: any) => ({
@@ -218,6 +223,7 @@ export default async function DashboardPage() {
           lowStockCount={lowStockCount}
           restockAlerts={restockAlerts}
           currentInventoryCount={currentInventoryCount}
+          expiredCount={expiredCount}
         />
       </section>
 
