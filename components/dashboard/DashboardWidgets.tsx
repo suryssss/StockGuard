@@ -1,6 +1,6 @@
 'use client'
 
-import { Package, TrendingDown, DollarSign, AlertCircle } from 'lucide-react'
+import { Package, TrendingDown, DollarSign, AlertCircle, Skull } from 'lucide-react'
 import { useLanguage } from '@/lib/LanguageContext'
 
 interface DashboardWidgetsProps {
@@ -8,13 +8,15 @@ interface DashboardWidgetsProps {
   lowStockCount: number
   restockAlerts: number
   currentInventoryCount: number
+  expiredCount?: number
 }
 
 export default function DashboardWidgets({ 
   itemsSoldToday, 
   lowStockCount, 
   restockAlerts, 
-  currentInventoryCount 
+  currentInventoryCount,
+  expiredCount = 0,
 }: DashboardWidgetsProps) {
   const { t } = useLanguage()
   
@@ -54,11 +56,20 @@ export default function DashboardWidgets({
       iconBg: "bg-red-500",
       textColor: "text-red-900",
       borderColor: "border-red-200/60"
-    }
+    },
+    ...(expiredCount > 0 ? [{
+      title: 'Expired / एक्सपायर्ड',
+      value: expiredCount,
+      icon: <Skull className="w-5 h-5 text-red-600" />,
+      bg: "bg-gradient-to-br from-red-200 to-red-100",
+      iconBg: "bg-red-700",
+      textColor: "text-red-900",
+      borderColor: "border-red-300/60"
+    }] : [])
   ]
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6 stagger-children">
+    <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-6 stagger-children">
       {widgets.map((widget, i) => (
         <div 
           key={i} 
@@ -76,3 +87,4 @@ export default function DashboardWidgets({
     </div>
   )
 }
+
