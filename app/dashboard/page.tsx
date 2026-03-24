@@ -2,7 +2,6 @@ import { supabase } from '@/lib/supabase'
 import { calcAtRisk, calcRecovered, calcLost } from '@/lib/lossCalculator'
 import LossCalculator from '@/components/dashboard/LossCalculator'
 import BatchTable from '@/components/dashboard/BatchTable'
-import DistributorScore from '@/components/dashboard/DistributorScore'
 import InvoiceUpload from '@/components/entry/InvoiceUpload'
 import ActionButtons from '@/components/dashboard/ActionButtons'
 import DashboardWidgets from '@/components/dashboard/DashboardWidgets'
@@ -240,11 +239,6 @@ export default async function DashboardPage() {
       {/* Batch Table */}
       <section className="mb-6">
         <BatchTable batches={batchesWithDays} shopId={resolvedShopId} />
-      </section>
-
-      {/* Distributors */}
-      <section className="mb-6">
-        <DistributorScore distributors={distData} />
       </section>
     </main>
   )

@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
-import { AlertTriangle, Send, Loader2, CheckCircle, Mic, MicOff, Package } from 'lucide-react'
+import { useState, useCallback } from 'react'
+import { AlertTriangle, Send, Loader2, CheckCircle } from 'lucide-react'
 import { useLanguage } from '@/lib/LanguageContext'
 import { useProfile } from '@/lib/hooks/useProfile'
 
@@ -22,11 +22,6 @@ export default function RestockAlerts({ products }: Props) {
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [statusMsg, setStatusMsg] = useState('')
   
-  // Voice state
-  const [isListening, setIsListening] = useState(false)
-  const [voiceText, setVoiceText] = useState('')
-  const recognitionRef = useRef<any>(null)
-
   const handleRestock = useCallback(async () => {
     setSending(true)
     setStatus('idle')
@@ -57,48 +52,6 @@ export default function RestockAlerts({ products }: Props) {
       }, 5000)
     }
   }, [products, profile, t])
-
-  const toggleVoice = useCallback(() => {
-    if (isListening) {
-      recognitionRef.current?.stop()
-      setIsListening(false)
-      return
-    }
-
-    // Check for Web Speech API
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
-    if (!SpeechRecognition) {
-      setStatusMsg('Speech recognition not supported in this browser')
-      setStatus('error')
-      setTimeout(() => { setStatus('idle'); setStatusMsg('') }, 3000)
-      return
-    }
-
-    const recognition = new SpeechRecognition()
-    recognition.continuous = false
-    recognition.interimResults = true
-    recognition.lang = 'en-IN'
-
-    recognition.onresult = (event: any) => {
-      const transcript = Array.from(event.results)
-        .map((result: any) => result[0].transcript)
-        .join('')
-      setVoiceText(transcript)
-    }
-
-    recognition.onerror = (event: any) => {
-      console.error('Speech recognition error:', event.error)
-      setIsListening(false)
-    }
-
-    recognition.onend = () => {
-      setIsListening(false)
-    }
-
-    recognitionRef.current = recognition
-    recognition.start()
-    setIsListening(true)
-  }, [isListening])
 
   return (
     <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200/60 rounded-2xl p-4 mb-6 animate-fade-in-up">
@@ -166,40 +119,7 @@ export default function RestockAlerts({ products }: Props) {
               </>
             )}
           </button>
-
-          {/* Voice Restock Button */}
-          <button
-            onClick={toggleVoice}
-            className={`flex items-center gap-2 px-4 py-3 rounded-xl font-bold text-sm transition-all active:scale-[0.97] ${
-              isListening
-                ? 'bg-red-500 text-white shadow-lg shadow-red-200/50 animate-pulse'
-                : 'bg-gradient-to-r from-violet-500 to-purple-500 hover:from-violet-600 hover:to-purple-600 text-white shadow-lg shadow-violet-200/50'
-            }`}
-          >
-            {isListening ? (
-              <>
-                <MicOff className="w-4 h-4" />
-                {t.restockStopListening}
-              </>
-            ) : (
-              <>
-                <Mic className="w-4 h-4" />
-                {t.restockVoice}
-              </>
-            )}
-          </button>
         </div>
-
-        {/* Voice Result */}
-        {voiceText && (
-          <div className="bg-white rounded-xl p-3 border border-violet-100 animate-fade-in-up">
-            <div className="flex items-center gap-2 mb-1">
-              <Mic className="w-3.5 h-3.5 text-violet-500" />
-              <span className="text-[10px] font-bold text-violet-600 uppercase">{t.restockVoice}</span>
-            </div>
-            <p className="text-sm text-gray-800 font-medium">&quot;{voiceText}&quot;</p>
-          </div>
-        )}
 
         {/* Status message */}
         {statusMsg && status !== 'idle' && (
